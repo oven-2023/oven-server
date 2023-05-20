@@ -1,4 +1,4 @@
-package com.oven.server;
+package com.oven.server.api;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

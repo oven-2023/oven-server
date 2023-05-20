@@ -1,6 +1,6 @@
-package com.oven.server.work.domain;
+package com.oven.server.api.work.domain;
 
-import com.oven.server.BaseEntity;
+import com.oven.server.api.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

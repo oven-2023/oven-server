@@ -1,6 +1,6 @@
-package com.oven.server.work.domain;
+package com.oven.server.api.work.domain;
 
-import com.oven.server.BaseEntity;
+import com.oven.server.api.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

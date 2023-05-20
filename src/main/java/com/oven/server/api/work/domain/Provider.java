@@ -1,4 +1,4 @@
-package com.oven.server.work.domain;
+package com.oven.server.api.work.domain;
 
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
-package com.oven.server.work.repository;
+package com.oven.server.api.work.repository;
 
-import com.oven.server.work.domain.Work;
+import com.oven.server.api.work.domain.Work;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
