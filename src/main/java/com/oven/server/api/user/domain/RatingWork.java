@@ -1,11 +1,12 @@
 package com.oven.server.api.user.domain;
 
+import com.oven.server.api.BaseEntity;
 import com.oven.server.api.work.domain.Work;
 
 import javax.persistence.*;
 
 @Entity
-public class RatingWork {
+public class RatingWork extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
