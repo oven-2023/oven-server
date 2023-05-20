@@ -18,7 +18,7 @@ public class InterestingWork extends BaseEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "work_id")
     private Work work;
 
 }
