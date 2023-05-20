@@ -1,5 +1,6 @@
 package com.oven.server.work.domain;
 
+import com.oven.server.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Slf4j
-public class WorkProvider {
+public class WorkProvider extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
