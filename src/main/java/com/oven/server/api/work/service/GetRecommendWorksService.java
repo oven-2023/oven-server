@@ -22,6 +22,7 @@ public class GetRecommendWorksService {
                 .map(
                         recommendWork -> GetWorkDto
                                 .builder()
+                                .workId(recommendWork.getId())
                                 .title(recommendWork.getTitleKr())
                                 .poster(recommendWork.getPoster())
                                 .build()

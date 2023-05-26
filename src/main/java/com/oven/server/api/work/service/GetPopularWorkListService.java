@@ -22,6 +22,7 @@ public class GetPopularWorkListService {
                 .stream()
                 .map(
                         popularWork -> GetWorkDto.builder()
+                                .workId(popularWork.getId())
                                 .title(popularWork.getTitleKr())
                                 .poster(popularWork.getPoster())
                                 .build()

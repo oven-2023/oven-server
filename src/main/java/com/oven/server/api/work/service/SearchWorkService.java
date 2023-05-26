@@ -22,6 +22,7 @@ public class SearchWorkService {
                     .stream()
                     .map(
                             searchedWork -> GetWorkDto.builder()
+                                    .workId(searchedWork.getId())
                                     .title(searchedWork.getTitleKr())
                                     .poster(searchedWork.getPoster())
                                     .build()

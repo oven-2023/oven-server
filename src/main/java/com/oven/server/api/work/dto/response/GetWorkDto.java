@@ -12,6 +12,9 @@ import lombok.Getter;
 @ApiModel(value="작품 정보", description = "작품 리스트 조회용(작품 제목, 포스터 이미지 주소)")
 public class GetWorkDto {
 
+    @ApiModelProperty(value="작품 id", example = "1")
+    private final Long workId;
+
     @ApiModelProperty(value="작품 제목", example = "택배 기사")
     private final String title;
 
