@@ -1,4 +1,4 @@
-package com.oven.server.api.user.dto;
+package com.oven.server.api.user.dto.request;
 
 import lombok.Getter;
 

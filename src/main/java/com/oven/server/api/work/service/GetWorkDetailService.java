@@ -22,7 +22,7 @@ public class GetWorkDetailService {
 
     public GetWorkDetailDto getWorkDetail(Long workId) throws BaseException {
 
-        Work findWork = workRepository.findById(workId).orElseThrow(() -> new BaseException(ResponseStatus.FAIL));
+        Work findWork = workRepository.findById(workId).orElseThrow(() -> new BaseException(ResponseStatus.WORK_NOT_FOUND));
 
         GetWorkDetailDto workDetailDto = GetWorkDetailDto.builder()
                 .titleKr(findWork.getTitleKr())
