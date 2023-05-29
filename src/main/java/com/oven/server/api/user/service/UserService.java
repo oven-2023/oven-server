@@ -8,6 +8,8 @@ import com.oven.server.api.user.dto.request.JoinRequest;
 import com.oven.server.api.user.dto.request.UserInfoRequest;
 import com.oven.server.api.user.dto.request.UserRequest;
 import com.oven.server.api.user.dto.response.TokenResponse;
+import com.oven.server.api.user.repository.InterestingWorkRepository;
+import com.oven.server.api.user.repository.RatingWorkRepository;
 import com.oven.server.api.user.repository.UserRepository;
 import com.oven.server.api.work.domain.Work;
 import com.oven.server.api.work.dto.WorkListResponse;
@@ -31,6 +33,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final InterestingWorkRepository interestingWorkRepository;
+    private final RatingWorkRepository ratingWorkRepository;
 
     public TokenResponse register(JoinRequest joinRequest) {
 
@@ -59,6 +63,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public List<GetWorkDto> getLikes(User user) {
 
         log.info(">>>>>>>>>>>>>" + user.getUsername());
@@ -70,7 +75,7 @@ public class UserService {
 //        String userName = (String) claims.get("userName");
 //        User user = userRepository.findByUserName(userName).get();
 
-        List<InterestingWork> interestingWorks = user.getInterestingWorkList();
+        List<InterestingWork> interestingWorks = interestingWorkRepository.findByUserId(user.getId());
 
         for (int i = 0; i < interestingWorks.size(); i++) {
             Work work = interestingWorks.get(i).getWork();
@@ -83,6 +88,7 @@ public class UserService {
 
     }
 
+    @Transactional
     public List<GetWorkDto> getRatings(User user) {
         List<GetWorkDto> workList = new ArrayList<GetWorkDto>();
 
@@ -91,7 +97,7 @@ public class UserService {
 //        String userName = (String) claims.get("userName");
 //        User user = userRepository.findByUserName(userName).get();
 
-        List<RatingWork> ratingWorks = user.getRatingWorkList();
+        List<RatingWork> ratingWorks = ratingWorkRepository.findByUserId(user.getId());
 
         for (int i = 0; i < ratingWorks.size(); i++) {
             Work work = ratingWorks.get(i).getWork();
