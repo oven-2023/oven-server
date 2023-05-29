@@ -1,8 +1,8 @@
-package com.oven.server.api.user.contoller;
+package com.oven.server.api.user.controller;
 
-import com.oven.server.api.user.dto.JoinRequest;
-import com.oven.server.api.user.dto.UserInfoRequest;
-import com.oven.server.api.user.dto.UserRequest;
+import com.oven.server.api.user.dto.request.JoinRequest;
+import com.oven.server.api.user.dto.request.UserInfoRequest;
+import com.oven.server.api.user.dto.request.UserRequest;
 import com.oven.server.api.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
