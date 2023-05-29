@@ -2,7 +2,6 @@ package com.oven.server.api.user.domain;
 
 import com.oven.server.api.BaseEntity;
 import com.oven.server.api.work.domain.Work;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,7 +28,6 @@ public class InterestingWork extends BaseEntity {
     public InterestingWork(User user, Work work) {
         this.user = user;
         this.work = work;
-        user.getInterestingWorkList().add(this);
     }
 
 }

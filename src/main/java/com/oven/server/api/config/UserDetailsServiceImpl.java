@@ -1,7 +1,10 @@
 package com.oven.server.api.config;
 
+import com.oven.server.api.response.BaseException;
+import com.oven.server.api.response.ResponseStatus;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,17 +16,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) {
         User user = userRepository.findByUserName(userName).get();
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),grantedAuthorities);
-        return new User(user.getId(), user.getUsername(), user.getNickname(), user.getPassword(), user.getInterestingWorkList(), user.getRatingWorkList());
+
+        return user;
     }
 
 }

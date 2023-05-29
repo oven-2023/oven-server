@@ -1,5 +1,6 @@
 package com.oven.server.api.user.controller;
 
+import com.oven.server.api.response.BaseException;
 import com.oven.server.api.response.Response;
 import com.oven.server.api.response.ResponseStatus;
 import com.oven.server.api.user.domain.User;
@@ -26,9 +27,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity join(@RequestBody JoinRequest joinRequest) throws Exception {
-        return ResponseEntity
-                .ok().body(userService.register(joinRequest));
+    public Response join(@RequestBody JoinRequest joinRequest) throws BaseException {
+        try {
+            userService.register(joinRequest);
+            return new Response<>(ResponseStatus.SUCCESS_POST);
+        } catch (BaseException e) {
+            return new Response<>(e.getResponseStatus());
+        }
     }
 
     @PostMapping("/login")
@@ -40,33 +45,18 @@ public class UserController {
 
     @GetMapping("/mypage/likes")
     public Response<List<GetWorkDto>> getInterestingWork(@AuthenticationPrincipal User user) {
-//        return ResponseEntity
-//                .ok().body(userService.getLikes(user));
+
         List<GetWorkDto> workList = userService.getLikes(user);
         return new Response<List<GetWorkDto>>(workList, ResponseStatus.SUCCESS);
-
-//        try {
-//            List<GetWorkDto> workList = userService.getLikes(user);
-//            return new Response<List<GetWorkDto>>(workList, ResponseStatus.SUCCESS);
-//        } catch (BaseException e) {
-//            return new Response<>(e.getResponseStatus());
-//        }
 
     }
 
     @GetMapping("/mypage/ratings")
     public Response<List<GetWorkDto>> getRatingWork(@AuthenticationPrincipal User user) {
-//        return ResponseEntity
-//                .ok().body(userService.getRatings(user));
 
         List<GetWorkDto> workList = userService.getRatings(user);
         return new Response<List<GetWorkDto>>(workList, ResponseStatus.SUCCESS);
-//        try {
-//            List<GetWorkDto> workList = userService.getRatings(user);
-//            return new Response<List<GetWorkDto>>(workList, ResponseStatus.SUCCESS);
-//        } catch (BaseException e) {
-//            return new Response<>(e.getResponseStatus());
-//        }
+
     }
 
 }

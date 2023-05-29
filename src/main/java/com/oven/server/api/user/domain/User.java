@@ -1,8 +1,7 @@
 package com.oven.server.api.user.domain;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.oven.server.api.BaseEntity;
-import io.jsonwebtoken.Claims;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,13 +10,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User extends BaseEntity implements UserDetails{
 
     @Id
@@ -31,21 +30,6 @@ public class User extends BaseEntity implements UserDetails{
 
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<RatingWork> ratingWorkList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<InterestingWork> interestingWorkList = new ArrayList<>();
-
-    @Builder
-    public User(Long id, String userName, String nickname, String password, List<InterestingWork> interestingWorkList, List<RatingWork> ratingWorkList) {
-        this.id = id;
-        this.userName = userName;
-        this.nickname = nickname;
-        this.password = password;
-        this.ratingWorkList = ratingWorkList;
-        this.interestingWorkList = interestingWorkList;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

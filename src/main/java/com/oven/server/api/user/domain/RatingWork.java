@@ -30,8 +30,6 @@ public class RatingWork extends BaseEntity {
         this.user = user;
         this.work = work;
         this.rating = rating;
-
-        user.getRatingWorkList().add(this);
     }
 
     public void changeRating(int rating) {
