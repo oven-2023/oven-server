@@ -9,7 +9,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
 public class RatingWork extends BaseEntity {
 
     @Id
@@ -25,5 +24,17 @@ public class RatingWork extends BaseEntity {
     private Work work;
 
     private int rating;     // 1~5점
+
+    public RatingWork(User user, Work work, int rating) {
+        this.user = user;
+        this.work = work;
+        this.rating = rating;
+
+        user.getRatingWorkList().add(this);
+    }
+
+    public void changeRating(int rating) {
+        this.rating = rating;
+    }
 
 }
