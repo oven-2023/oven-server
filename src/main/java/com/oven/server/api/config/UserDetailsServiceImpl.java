@@ -22,7 +22,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) {
         User user = userRepository.findByUserName(userName).get();
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),grantedAuthorities);
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),grantedAuthorities);
+        return new User(user.getId(), user.getUsername(), user.getNickname(), user.getPassword());
     }
 
 }

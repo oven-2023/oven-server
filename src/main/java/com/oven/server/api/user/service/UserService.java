@@ -9,6 +9,7 @@ import com.oven.server.api.user.repository.UserRepository;
 import com.oven.server.api.work.domain.Work;
 import com.oven.server.api.work.dto.WorkListResponse;
 import com.oven.server.api.work.dto.WorkResponse;
+import com.oven.server.api.work.dto.response.GetWorkDto;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,53 +53,55 @@ public class UserService {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
-        String token = jwtTokenProvider.createToken(user.getUserName());
+        String token = jwtTokenProvider.createToken(user.getUsername());
 
         return TokenResponse.builder()
                 .message("로그인 성공").token(token).build();
 
     }
 
-    public WorkListResponse getLikes(UserInfoRequest userInfoRequest) {
+    public List<GetWorkDto> getLikes(User user) {
 
-        List<WorkResponse> workList = new ArrayList<WorkResponse>();
+        log.info(">>>>>>>>>>>>>" + user.getUsername());
+        List<GetWorkDto> workList = new ArrayList<GetWorkDto>();
 
-        Claims claims;
-        claims = jwtTokenProvider.getClaims(userInfoRequest.getToken());
-        String userName = (String) claims.get("userName");
-        User user = userRepository.findByUserName(userName).get();
+
+//        Claims claims;
+//        claims = jwtTokenProvider.getClaims(userInfoRequest.getToken());
+//        String userName = (String) claims.get("userName");
+//        User user = userRepository.findByUserName(userName).get();
 
         List<InterestingWork> interestingWorks = user.getInterestingWorkList();
 
         for (int i = 0; i < interestingWorks.size(); i++) {
             Work work = interestingWorks.get(i).getWork();
-            WorkResponse workResponse = WorkResponse.builder()
-                    .titleKr(work.getTitleKr()).titleEng(work.getTitleEng()).year(work.getYear()).poster(work.getPoster()).build();
-            workList.add(workResponse);
+            GetWorkDto getWorkDto = GetWorkDto.builder()
+                    .title(work.getTitleKr()).poster(work.getPoster()).build();
+            workList.add(getWorkDto);
         }
 
-        return WorkListResponse.builder().workResponses(workList).build();
+        return workList;
 
     }
 
-    public WorkListResponse getRatings(UserInfoRequest userInfoRequest) {
-        List<WorkResponse> workList = new ArrayList<WorkResponse>();
+    public List<GetWorkDto> getRatings(User user) {
+        List<GetWorkDto> workList = new ArrayList<GetWorkDto>();
 
-        Claims claims;
-        claims = jwtTokenProvider.getClaims(userInfoRequest.getToken());
-        String userName = (String) claims.get("userName");
-        User user = userRepository.findByUserName(userName).get();
+//        Claims claims;
+//        claims = jwtTokenProvider.getClaims(userInfoRequest.getToken());
+//        String userName = (String) claims.get("userName");
+//        User user = userRepository.findByUserName(userName).get();
 
         List<RatingWork> ratingWorks = user.getRatingWorkList();
 
         for (int i = 0; i < ratingWorks.size(); i++) {
             Work work = ratingWorks.get(i).getWork();
-            WorkResponse workResponse = WorkResponse.builder()
-                    .titleKr(work.getTitleKr()).titleEng(work.getTitleEng()).year(work.getYear()).poster(work.getPoster()).build();
-            workList.add(workResponse);
+            GetWorkDto getWorkDto = GetWorkDto.builder()
+                    .title(work.getTitleKr()).poster(work.getPoster()).build();
+            workList.add(getWorkDto);
         }
 
-        return WorkListResponse.builder().workResponses(workList).build();
+        return workList;
 
     }
 
