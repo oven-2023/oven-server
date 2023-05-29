@@ -1,18 +1,27 @@
 package com.oven.server.api.user.service;
 
 import com.oven.server.api.jwt.JwtTokenProvider;
+import com.oven.server.api.user.domain.InterestingWork;
+import com.oven.server.api.user.domain.RatingWork;
 import com.oven.server.api.user.domain.User;
-import com.oven.server.api.user.dto.JoinRequest;
-import com.oven.server.api.user.dto.TokenResponse;
-import com.oven.server.api.user.dto.UserRequest;
+import com.oven.server.api.user.dto.*;
 import com.oven.server.api.user.repository.UserRepository;
+import com.oven.server.api.work.domain.Work;
+import com.oven.server.api.work.dto.WorkListResponse;
+import com.oven.server.api.work.dto.WorkResponse;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -47,6 +56,49 @@ public class UserService {
 
         return TokenResponse.builder()
                 .message("로그인 성공").token(token).build();
+
+    }
+
+    public WorkListResponse getLikes(UserInfoRequest userInfoRequest) {
+
+        List<WorkResponse> workList = new ArrayList<WorkResponse>();
+
+        Claims claims;
+        claims = jwtTokenProvider.getClaims(userInfoRequest.getToken());
+        String userName = (String) claims.get("userName");
+        User user = userRepository.findByUserName(userName).get();
+
+        List<InterestingWork> interestingWorks = user.getInterestingWorkList();
+
+        for (int i = 0; i < interestingWorks.size(); i++) {
+            Work work = interestingWorks.get(i).getWork();
+            WorkResponse workResponse = WorkResponse.builder()
+                    .titleKr(work.getTitleKr()).titleEng(work.getTitleEng()).year(work.getYear()).poster(work.getPoster()).build();
+            workList.add(workResponse);
+        }
+
+        return WorkListResponse.builder().workResponses(workList).build();
+
+    }
+
+    public WorkListResponse getRatings(UserInfoRequest userInfoRequest) {
+        List<WorkResponse> workList = new ArrayList<WorkResponse>();
+
+        Claims claims;
+        claims = jwtTokenProvider.getClaims(userInfoRequest.getToken());
+        String userName = (String) claims.get("userName");
+        User user = userRepository.findByUserName(userName).get();
+
+        List<RatingWork> ratingWorks = user.getRatingWorkList();
+
+        for (int i = 0; i < ratingWorks.size(); i++) {
+            Work work = ratingWorks.get(i).getWork();
+            WorkResponse workResponse = WorkResponse.builder()
+                    .titleKr(work.getTitleKr()).titleEng(work.getTitleEng()).year(work.getYear()).poster(work.getPoster()).build();
+            workList.add(workResponse);
+        }
+
+        return WorkListResponse.builder().workResponses(workList).build();
 
     }
 

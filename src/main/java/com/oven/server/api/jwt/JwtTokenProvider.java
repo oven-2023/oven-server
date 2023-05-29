@@ -37,6 +37,7 @@ public class JwtTokenProvider {
     public String createToken(String userName) {
         Claims claims = Jwts.claims();
         claims.put("userName", userName); // 정보는 key / value 쌍으로 저장된다.
+        claims.setSubject(userName);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보 저장
@@ -45,6 +46,14 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
                 // signature 에 들어갈 secret값 세팅
                 .compact();
+    }
+
+    public Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
+
     }
 
     // JWT 토큰에서 인증 정보 조회
