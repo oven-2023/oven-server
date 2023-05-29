@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +38,13 @@ public class User extends BaseEntity implements UserDetails {
     private List<InterestingWork> interestingWorkList = new ArrayList<>();
 
     @Builder
-    public User(Long id, String userName, String nickname, String password) {
+    public User(Long id, String userName, String nickname, String password, List<InterestingWork> interestingWorkList, List<RatingWork> ratingWorkList) {
         this.id = id;
         this.userName = userName;
         this.nickname = nickname;
         this.password = password;
+        this.ratingWorkList = ratingWorkList;
+        this.interestingWorkList = interestingWorkList;
     }
 
     @Override
