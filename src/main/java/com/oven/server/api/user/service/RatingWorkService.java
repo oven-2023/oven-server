@@ -2,32 +2,37 @@ package com.oven.server.api.user.service;
 
 import com.oven.server.api.response.BaseException;
 import com.oven.server.api.response.ResponseStatus;
-import com.oven.server.api.user.domain.InterestingWork;
+import com.oven.server.api.user.domain.RatingWork;
 import com.oven.server.api.user.domain.User;
-import com.oven.server.api.user.repository.InterestingWorkRepository;
-import com.oven.server.api.user.repository.UserRepository;
+import com.oven.server.api.user.dto.request.RatingWorkDto;
+import com.oven.server.api.user.repository.RatingWorkRepository;
 import com.oven.server.api.work.domain.Work;
 import com.oven.server.api.work.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class InterestingWorkService {
+public class RatingWorkService {
 
-    private final InterestingWorkRepository interestingWorkRepository;
+    private final RatingWorkRepository ratingWorkRepository;
     private final WorkRepository workRepository;
 
-    public void postInterestingWork(@AuthenticationPrincipal User user, Long workId) throws BaseException {
+    public void postRatingWork(User user, Long workId, RatingWorkDto ratingWorkDto) throws BaseException {
 
         userValidate(user);
         Work work = workValidate(workId);
 
-        InterestingWork newInterestingWork = new InterestingWork(user, work);
-        interestingWorkRepository.save(newInterestingWork);
+        RatingWork ratingWork = ratingWorkRepository.findByUserIdAndWorkId(user.getId(), workId);
+
+        if(ratingWork == null) {
+            RatingWork newRatingWork = new RatingWork(user, work, ratingWorkDto.getRating());
+            ratingWorkRepository.save(newRatingWork);
+        } else {
+            ratingWork.changeRating(ratingWorkDto.getRating());
+        }
 
     }
 
