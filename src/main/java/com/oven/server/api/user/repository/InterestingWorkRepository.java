@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InterestingWorkRepository extends JpaRepository<InterestingWork, Long> {
 
+    InterestingWork findByUserIdAndWorkId(Long userId, Long workId);
+
 }

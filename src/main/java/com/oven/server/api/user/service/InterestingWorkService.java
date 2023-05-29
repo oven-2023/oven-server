@@ -5,7 +5,6 @@ import com.oven.server.api.response.ResponseStatus;
 import com.oven.server.api.user.domain.InterestingWork;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.repository.InterestingWorkRepository;
-import com.oven.server.api.user.repository.UserRepository;
 import com.oven.server.api.work.domain.Work;
 import com.oven.server.api.work.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +25,14 @@ public class InterestingWorkService {
         userValidate(user);
         Work work = workValidate(workId);
 
-        InterestingWork newInterestingWork = new InterestingWork(user, work);
-        interestingWorkRepository.save(newInterestingWork);
+        InterestingWork interestingWork = interestingWorkRepository.findByUserIdAndWorkId(user.getId(), workId);
+
+        if(interestingWork == null) {
+            InterestingWork newInterestingWork = new InterestingWork(user, work);
+            interestingWorkRepository.save(newInterestingWork);
+        } else {
+            interestingWorkRepository.delete(interestingWork);
+        }
 
     }
 
