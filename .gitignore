@@ -42,3 +42,6 @@ out/
 ### crawling ###
 /src/main/java/com/oven/server/api/work/controller/SaveRatingDataController.java
 /src/main/java/com/oven/server/api/work/service/SaveRatingDataService.java
+
+### application.yml ###
+/src/main/resources/application-db.yml
