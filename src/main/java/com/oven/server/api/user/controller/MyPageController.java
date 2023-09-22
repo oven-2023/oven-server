@@ -29,7 +29,7 @@ public class MyPageController {
         return Response.success(ResponseCode.SUCCESS_OK, workList);
     }
 
-    @Operation(description = "평가한 작품 조회")
+    @Operation(summary = "평가한 작품 조회")
     @GetMapping("/mypage/ratings")
     public Response<List<GetWorkListDto>> getRatingWork(@AuthenticationPrincipal User user) {
         List<GetWorkListDto> workList = myPageService.getRatings(user);

@@ -10,7 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PostRatingDto {
 
-    @Schema(name = "평점", example = "3")
+    @Schema(description = "평점", example = "3")
     private int rating;
 
 }
