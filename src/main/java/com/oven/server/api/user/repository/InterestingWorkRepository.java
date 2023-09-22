@@ -13,4 +13,6 @@ public interface InterestingWorkRepository extends JpaRepository<InterestingWork
 
     List<InterestingWork> findByUserOrderByCreatedAtDesc(User user);
 
+    InterestingWork findByUserAndWork(User user, Work work);
+
 }

@@ -24,4 +24,9 @@ public class InterestingWork extends BaseEntity {
     @JoinColumn(name = "work_id")
     private Work work;
 
+    public InterestingWork(User user, Work work) {
+        this.user = user;
+        this.work = work;
+    }
+
 }
