@@ -2,7 +2,7 @@ package com.oven.server.api.user.controller;
 
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.service.MyPageService;
-import com.oven.server.api.work.dto.GetWorkListDto;
+import com.oven.server.api.work.dto.response.GetWorkListDto;
 import com.oven.server.common.response.Response;
 import com.oven.server.common.response.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;

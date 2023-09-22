@@ -1,6 +1,6 @@
 package com.oven.server.api.work.service;
 
-import com.oven.server.api.work.dto.GetWorkListDto;
+import com.oven.server.api.work.dto.response.GetWorkListDto;
 import com.oven.server.api.work.repository.WorkRepository;
 import com.oven.server.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;

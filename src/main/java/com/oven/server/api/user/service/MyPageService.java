@@ -3,7 +3,7 @@ package com.oven.server.api.user.service;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.repository.InterestingWorkRepository;
 import com.oven.server.api.user.repository.RatingWorkRepository;
-import com.oven.server.api.work.dto.GetWorkListDto;
+import com.oven.server.api.work.dto.response.GetWorkListDto;
 import com.oven.server.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package com.oven.server.api.work.service;
 
 import com.oven.server.api.work.domain.Work;
-import com.oven.server.api.work.dto.GetProviderDto;
-import com.oven.server.api.work.dto.GetWorkDetailDto;
+import com.oven.server.api.work.dto.response.GetProviderDto;
+import com.oven.server.api.work.dto.response.GetWorkDetailDto;
 import com.oven.server.api.work.repository.WorkProviderRepository;
 import com.oven.server.api.work.repository.WorkRepository;
 import com.oven.server.common.exception.BaseException;

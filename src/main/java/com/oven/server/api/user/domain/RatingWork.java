@@ -25,4 +25,10 @@ public class RatingWork extends BaseEntity {
 
     private int rating;     // 1~5점
 
+    public RatingWork(User user, Work work, int rating) {
+        this.user = user;
+        this.work = work;
+        this.rating = rating;
+    }
+
 }

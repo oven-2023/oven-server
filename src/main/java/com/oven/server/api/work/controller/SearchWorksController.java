@@ -1,6 +1,6 @@
 package com.oven.server.api.work.controller;
 
-import com.oven.server.api.work.dto.GetWorkListDto;
+import com.oven.server.api.work.dto.response.GetWorkListDto;
 import com.oven.server.api.work.service.SearchWorksService;
 import com.oven.server.common.response.Response;
 import com.oven.server.common.response.ResponseCode;

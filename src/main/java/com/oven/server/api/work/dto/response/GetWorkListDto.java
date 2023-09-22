@@ -1,4 +1,4 @@
-package com.oven.server.api.work.dto;
+package com.oven.server.api.work.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
