@@ -20,7 +20,7 @@ public class SearchWorksController {
 
     private final SearchWorksService searchWorkService;
 
-    @Operation(description = "작품 검색 API")
+    @Operation(summary = "작품 제목 검색")
     @GetMapping("/search")
     public Response<List<GetWorkListDto>> searchWork(@RequestParam("keyword") String keyword) {
         List<GetWorkListDto> workList = searchWorkService.searchWork(keyword);

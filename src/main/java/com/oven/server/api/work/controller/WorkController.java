@@ -18,13 +18,11 @@ public class WorkController {
 
     private final GetWorkDetailService getWorkDetailService;
 
-    @Operation(summary = "작품 상세 API")
+    @Operation(summary = "작품 상세 조회")
     @GetMapping("/works/{workId}")
     public Response<GetWorkDetailDto> getRecommendWorkList(@PathVariable("workId") Long workId) {
         GetWorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(workId);
         return Response.success(ResponseCode.SUCCESS_OK, workDetailDto);
     }
-
-
 
 }
