@@ -2,7 +2,6 @@ package com.oven.server.api.user.domain;
 
 import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User extends BaseEntity {
 
     @Id
@@ -24,5 +21,13 @@ public class User extends BaseEntity {
     private String nickname;
 
     private String password;
+
+    @Builder
+    public User(Long id, String username, String nickname, String password) {
+        this.id = id;
+        this.username = username;
+        this.nickname = nickname;
+        this.password = password;
+    }
 
 }

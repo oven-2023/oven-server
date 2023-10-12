@@ -1,6 +1,7 @@
 package com.oven.server.api.user.controller;
 
 import com.oven.server.api.user.dto.request.IdCheckRequest;
+import com.oven.server.api.user.dto.request.JoinRequest;
 import com.oven.server.api.user.dto.response.IdCheckResponse;
 import com.oven.server.api.user.service.AuthService;
 import com.oven.server.common.response.Response;
@@ -28,6 +29,13 @@ public class AuthController {
     public Response<IdCheckResponse> idDuplicateCheck(@RequestBody IdCheckRequest idCheckRequest) {
         IdCheckResponse idCheckResponse = authService.idDuplicateCheck(idCheckRequest);
         return Response.success(ResponseCode.SUCCESS_OK, idCheckResponse);
+    }
+
+    @Operation(summary = "회원가입")
+    @PostMapping(value = "/join")
+    public Response<Void> join(@RequestBody JoinRequest joinRequest) {
+        authService.join(joinRequest);
+        return Response.success(ResponseCode.SUCCESS_CREATED);
     }
 
 }
