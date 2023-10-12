@@ -2,7 +2,9 @@ package com.oven.server.api.user.controller;
 
 import com.oven.server.api.user.dto.request.IdCheckRequest;
 import com.oven.server.api.user.dto.request.JoinRequest;
+import com.oven.server.api.user.dto.request.LoginRequest;
 import com.oven.server.api.user.dto.response.IdCheckResponse;
+import com.oven.server.api.user.dto.response.JwtTokenResponse;
 import com.oven.server.api.user.service.AuthService;
 import com.oven.server.common.response.Response;
 import com.oven.server.common.response.ResponseCode;
@@ -38,6 +40,11 @@ public class AuthController {
         return Response.success(ResponseCode.SUCCESS_CREATED);
     }
 
-
+    @Operation(summary = "로그인")
+    @PostMapping(value = "/login")
+    public Response<JwtTokenResponse> login(@RequestBody LoginRequest loginRequest) {
+        JwtTokenResponse jwtTokenResponse = authService.login(loginRequest);
+        return Response.success(ResponseCode.SUCCESS_OK, jwtTokenResponse);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.oven.server.config.jwt;
 
 import com.oven.server.api.user.dto.response.JwtTokenResponse;
+import com.oven.server.api.user.service.RefreshTokenService;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.common.response.ResponseCode;
 import io.jsonwebtoken.*;
@@ -25,6 +26,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
+    private final RefreshTokenService refreshTokenService;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -46,10 +48,11 @@ public class JwtTokenProvider {
 
         JwtTokenResponse jwtTokenResponse = JwtTokenResponse.builder()
                 .accessToken(createAccessToken(username, now))
-                .refreshToken(createRefreshToken(now))
+                .refreshToken(createRefreshToken(username, now))
                 .build();
 
         log.info("[createJwtToken] Jwt 토큰 생성 완료");
+
 
         return jwtTokenResponse;
     }
@@ -73,7 +76,7 @@ public class JwtTokenProvider {
         return accessToken;
     }
 
-    public String createRefreshToken(Date now) {
+    public String createRefreshToken(String username, Date now) {
         log.info("[createRefreshToken] 리프레쉬 토큰 생성 시작");
 
         String refreshToken = Jwts.builder()
@@ -82,6 +85,8 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(now.getTime() + refreshValidTime))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+
+        refreshTokenService.saveRefreshToken(refreshToken, username);
 
         log.info("[createRefreshToken] 리프레쉬 토큰 생성 완료");
 

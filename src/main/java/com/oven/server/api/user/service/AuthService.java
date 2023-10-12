@@ -55,10 +55,7 @@ public class AuthService {
             throw new BaseException(ResponseCode.PASSWORD_NOT_MATCH);
         }
 
-        JwtTokenResponse jwtTokenResponse = jwtTokenProvider.createJwtToken(user.getUsername());
-
-
-        return jwtTokenResponse;
+        return jwtTokenProvider.createJwtToken(user.getUsername());
     }
 
 }
