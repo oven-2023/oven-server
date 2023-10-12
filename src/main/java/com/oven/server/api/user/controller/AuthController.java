@@ -26,7 +26,6 @@ public class AuthController {
     @Operation(summary = "아이디 중복 확인")
     @PostMapping(value = "/id/exists")
     public Response<IdCheckResponse> idDuplicateCheck(@RequestBody IdCheckRequest idCheckRequest) {
-        log.info("------id중복체크");
         IdCheckResponse idCheckResponse = authService.idDuplicateCheck(idCheckRequest);
         return Response.success(ResponseCode.SUCCESS_OK, idCheckResponse);
     }
