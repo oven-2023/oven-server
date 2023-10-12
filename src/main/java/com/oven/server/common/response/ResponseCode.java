@@ -27,6 +27,8 @@ public enum ResponseCode {
     ACCESS_DENIED(UNAUTHORIZED, "접근이 금지되었습니다."),
     DUPLICATE_NICKNAME(BAD_REQUEST, "중복된 사용자 계정명입니다."),
     REFRESH_TOKEN_NOT_FOUND(UNAUTHORIZED, "리프레쉬 토큰이 만료되었습니다"),
+    ID_NOT_FOUND(BAD_REQUEST, "존재하지 않는 아이디입니다."),
+    PASSWORD_NOT_MATCH(BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
 
     // Work
     WORK_NOT_FOUND(BAD_REQUEST, "작품을 찾을 수 없습니다.");
