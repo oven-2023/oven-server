@@ -18,7 +18,10 @@ import java.util.Arrays;
         info = @Info(title = "Oven 2023 API Document",
                 description = "2023 홍익대학교 컴퓨터공학과 졸업 프로젝트 Oven API 명세서",
                 version = "1.0.0"),
-        servers = {@Server(url = "/")}
+        servers = {
+                @Server(url = "http://localhost:8080"),
+                @Server(url = "https://hs-ceos.shop")
+                }
         )
 @Configuration
 public class SwaggerConfig {
