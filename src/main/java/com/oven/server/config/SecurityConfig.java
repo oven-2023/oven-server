@@ -1,4 +1,4 @@
-package com.oven.server.config.security;
+package com.oven.server.config;
 
 import com.oven.server.config.jwt.JwtAccessDeniedHandler;
 import com.oven.server.config.jwt.JwtAuthenticationEntryPoint;

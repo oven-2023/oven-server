@@ -1,8 +1,11 @@
 package com.oven.server.api.user.controller;
 
+import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.dto.request.IdCheckRequest;
 import com.oven.server.api.user.dto.request.JoinRequest;
 import com.oven.server.api.user.dto.request.LoginRequest;
+import com.oven.server.api.user.dto.request.RefreshTokenRequest;
+import com.oven.server.api.user.dto.response.AccessTokenResponse;
 import com.oven.server.api.user.dto.response.IdCheckResponse;
 import com.oven.server.api.user.dto.response.JwtTokenResponse;
 import com.oven.server.api.user.service.AuthService;
@@ -12,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +49,20 @@ public class AuthController {
     public Response<JwtTokenResponse> login(@RequestBody LoginRequest loginRequest) {
         JwtTokenResponse jwtTokenResponse = authService.login(loginRequest);
         return Response.success(ResponseCode.SUCCESS_OK, jwtTokenResponse);
+    }
+
+    @Operation(summary = "로그아웃")
+    @PostMapping(value = "/logout")
+    public Response<Void> signOut(@AuthenticationPrincipal User user, @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        authService.logout(user, refreshTokenRequest);
+        return Response.success(ResponseCode.SUCCESS_OK);
+    }
+
+    @Operation(summary = "리프레쉬 토큰으로 액세스 토큰 재발급")
+    @PostMapping(value = "/reissuance")
+    public Response<AccessTokenResponse> reissueAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        AccessTokenResponse accessTokenDto = authService.reissueAccessToken(refreshTokenRequest);
+        return Response.success(ResponseCode.SUCCESS_CREATED, accessTokenDto);
     }
 
 }
