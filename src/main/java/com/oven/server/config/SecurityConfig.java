@@ -49,6 +49,8 @@ public class SecurityConfig {
                 .and()
                 .httpBasic().disable()
                 .csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
