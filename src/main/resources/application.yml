@@ -1,26 +1,3 @@
-#spring:
-#<<<<<<< HEAD
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    generate-ddl: true
-#    show-sql: true
-#    hibernate:
-#      ddl-auto: update
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/oven?serverTimezone=Asia/Seoul
-#    username: root
-#    password: young2352!
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
-#=======
-#  profiles:
-#    include:
-#      - db
-#      - security
-#      - redis
-#>>>>>>> d45cbee49f9f3804280f1c8460d9af9c157d334c
 spring:
   profiles:
     include:
