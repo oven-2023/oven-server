@@ -15,5 +15,8 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
 
     List<Work> findByTitleKrContaining(String keyword);
 
+    @Query(value = "SELECT * FROM oven.work order by RAND() limit 4",nativeQuery = true)
+    List<Work> findRandoms();
+
 
 }

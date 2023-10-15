@@ -2,30 +2,25 @@ package com.oven.server.api.user.service;
 
 import com.oven.server.api.jwt.JwtTokenProvider;
 import com.oven.server.api.response.BaseException;
-import com.oven.server.api.response.ResponseStatus;
-import com.oven.server.api.user.domain.InterestingWork;
-import com.oven.server.api.user.domain.RatingWork;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.dto.request.JoinRequest;
-import com.oven.server.api.user.dto.request.UserInfoRequest;
 import com.oven.server.api.user.dto.request.UserRequest;
 import com.oven.server.api.user.dto.response.TokenResponse;
 import com.oven.server.api.user.repository.InterestingWorkRepository;
 import com.oven.server.api.user.repository.RatingWorkRepository;
 import com.oven.server.api.user.repository.UserRepository;
 import com.oven.server.api.work.domain.Work;
-import com.oven.server.api.work.dto.WorkListResponse;
-import com.oven.server.api.work.dto.WorkResponse;
 import com.oven.server.api.work.dto.response.GetWorkDto;
-import io.jsonwebtoken.Claims;
+import com.oven.server.api.work.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.io.*;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +30,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final WorkRepository workRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final InterestingWorkRepository interestingWorkRepository;
