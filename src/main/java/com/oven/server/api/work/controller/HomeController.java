@@ -31,12 +31,6 @@ public class HomeController {
     @GetMapping("/populars")
     public Response<List<GetWorkListDto>> getPopularWorkList() {
 
-//        try {
-//            List<GetWorkListDto> popularWorkDtoList = getPopularWorkListService.getPopularWorkList();
-//            return new Response<>(popularWorkDtoList, ResponseCode.SUCCESS_OK);
-//        } catch (BaseException e) {
-//            return new Response<>(e.getResponseCode());
-//        }
         List<GetWorkListDto> popularWorkDtoList = getPopularWorkListService.getPopularWorkList();
         return Response.success(ResponseCode.SUCCESS_OK, popularWorkDtoList);
 
