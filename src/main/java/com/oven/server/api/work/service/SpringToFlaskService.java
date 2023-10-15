@@ -27,8 +27,7 @@ public class SpringToFlaskService {
         //RestTemplate를 사용하여 POST 요청 보내기
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(flaskApiUrl, requestEntity, String.class);
-
-
+        
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String response = responseEntity.getBody();
             System.out.println("플라스크 서버 응답: " + response);
