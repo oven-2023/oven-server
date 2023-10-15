@@ -1,15 +1,14 @@
 package com.oven.server.api.work.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.oven.server.api.response.BaseException;
-import com.oven.server.api.response.Response;
-import com.oven.server.api.response.ResponseStatus;
+import com.oven.server.common.response.Response;
+import com.oven.server.common.exception.BaseException;
+import com.oven.server.common.response.ResponseCode;
 import com.oven.server.api.user.domain.User;
-import com.oven.server.api.work.dto.response.GetWorkDto;
+import com.oven.server.api.work.dto.response.GetWorkListDto;
 import com.oven.server.api.work.service.GetPopularWorkListService;
 import com.oven.server.api.work.service.GetRecommendWorksService;
 import com.oven.server.api.work.service.SpringToFlaskService;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(tags="Home", value = "홈 화면 API")
+@Tag(name="Home", description = "홈 화면 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/home")
@@ -30,14 +29,17 @@ public class HomeController {
 
     @Operation(summary = "인기 작품 조회 API")
     @GetMapping("/populars")
-    public Response<List<GetWorkDto>> getPopularWorkList() {
+    public Response<List<GetWorkListDto>> getPopularWorkList() {
 
-        try {
-            List<GetWorkDto> popularWorkDtoList = getPopularWorkListService.getPopularWorkList();
-            return new Response<>(popularWorkDtoList, ResponseStatus.SUCCESS);
-        } catch (BaseException e) {
-            return new Response<>(e.getResponseStatus());
-        }
+//        try {
+//            List<GetWorkListDto> popularWorkDtoList = getPopularWorkListService.getPopularWorkList();
+//            return new Response<>(popularWorkDtoList, ResponseCode.SUCCESS_OK);
+//        } catch (BaseException e) {
+//            return new Response<>(e.getResponseCode());
+//        }
+        List<GetWorkListDto> popularWorkDtoList = getPopularWorkListService.getPopularWorkList();
+        return Response.success(ResponseCode.SUCCESS_OK, popularWorkDtoList);
+
     }
 
     @GetMapping("/recommendation/works")
@@ -47,16 +49,16 @@ public class HomeController {
 
     @Operation(summary = "추천 작품 조회 API")
     @PostMapping("/recommendation/works")
-    public Response<List<GetWorkDto>> getRecommendWorkList(@RequestBody String dataFromFlask) {
+    public Response<List<GetWorkListDto>> getRecommendWorkList(@RequestBody String dataFromFlask) {
 
         try {
-            List<GetWorkDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(dataFromFlask);
-            return new Response<>(recommendWorkDtoList, ResponseStatus.SUCCESS);
-        } catch (BaseException e) {
-            return new Response<>(e.getResponseStatus());
+            List<GetWorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(dataFromFlask);
+            return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
  // /home/recommendation/provider

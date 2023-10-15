@@ -1,11 +1,10 @@
 package com.oven.server.api.user.domain;
 
-import com.oven.server.api.BaseEntity;
 import com.oven.server.api.work.domain.Work;
+import com.oven.server.common.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
@@ -29,10 +28,6 @@ public class RatingWork extends BaseEntity {
     public RatingWork(User user, Work work, int rating) {
         this.user = user;
         this.work = work;
-        this.rating = rating;
-    }
-
-    public void changeRating(int rating) {
         this.rating = rating;
     }
 

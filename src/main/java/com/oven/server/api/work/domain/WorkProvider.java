@@ -1,11 +1,10 @@
 package com.oven.server.api.work.domain;
 
-import com.oven.server.api.BaseEntity;
+import com.oven.server.common.BaseEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.persistence.*;
 
 @Entity
 @Getter
@@ -25,15 +24,5 @@ public class WorkProvider extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
     private Provider provider;
-
-    public void setWork(Work work) {
-        this.work = work;
-        work.getProviderList().add(this);
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-        provider.getWorkList().add(this);
-    }
 
 }

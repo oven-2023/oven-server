@@ -1,9 +1,9 @@
 package com.oven.server.api.work.domain;
 
-import com.oven.server.api.BaseEntity;
+import com.oven.server.common.BaseEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class Work extends BaseEntity {
     private int year;
 
     private String rating;  // 관람연령등급
-
 
     private String director;
 

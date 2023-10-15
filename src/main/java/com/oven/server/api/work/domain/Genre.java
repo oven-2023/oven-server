@@ -1,16 +1,16 @@
 package com.oven.server.api.work.domain;
 
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Embeddable;
-
 @Embeddable
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Genre {
 
     private Boolean action = false;         //    액션

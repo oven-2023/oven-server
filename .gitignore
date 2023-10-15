@@ -39,9 +39,11 @@ out/
 ### MAC ###
 .DS_Store
 
-### test ###
-/src/test/
+### crawling ###
+/src/main/java/com/oven/server/api/work/controller/SaveRatingDataController.java
+/src/main/java/com/oven/server/api/work/service/SaveRatingDataService.java
 
-### properties ###
-/src/main/resources/application.properties
-/src/main/resources/application-prod.properties
+### application.yml ###
+/src/main/resources/application-db.yml
+/src/main/resources/application-security.yml
+/src/main/resources/application-redis.yml

@@ -1,8 +1,8 @@
 package com.oven.server.api.work.domain;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
