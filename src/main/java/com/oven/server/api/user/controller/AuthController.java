@@ -8,6 +8,7 @@ import com.oven.server.api.user.dto.request.RefreshTokenRequest;
 import com.oven.server.api.user.dto.response.AccessTokenResponse;
 import com.oven.server.api.user.dto.response.IdCheckResponse;
 import com.oven.server.api.user.dto.response.JwtTokenResponse;
+import com.oven.server.api.user.dto.response.LoginSuccessResponse;
 import com.oven.server.api.user.service.AuthService;
 import com.oven.server.common.response.Response;
 import com.oven.server.common.response.ResponseCode;
@@ -46,9 +47,9 @@ public class AuthController {
 
     @Operation(summary = "로그인")
     @PostMapping(value = "/login")
-    public Response<JwtTokenResponse> login(@RequestBody LoginRequest loginRequest) {
-        JwtTokenResponse jwtTokenResponse = authService.login(loginRequest);
-        return Response.success(ResponseCode.SUCCESS_OK, jwtTokenResponse);
+    public Response<LoginSuccessResponse> login(@RequestBody LoginRequest loginRequest) {
+        LoginSuccessResponse loginSuccessResponse = authService.login(loginRequest);
+        return Response.success(ResponseCode.SUCCESS_OK, loginSuccessResponse);
     }
 
     @Operation(summary = "로그아웃")
