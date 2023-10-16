@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class GetProviderDto {
+public class ProviderDto {
 
     @Schema(description="OTT 이름", example = "NETFLIX")
     private String name;

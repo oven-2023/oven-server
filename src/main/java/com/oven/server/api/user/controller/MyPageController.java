@@ -2,7 +2,7 @@ package com.oven.server.api.user.controller;
 
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.service.MyPageService;
-import com.oven.server.api.work.dto.response.GetWorkListDto;
+import com.oven.server.api.work.dto.response.WorkListDto;
 import com.oven.server.common.response.Response;
 import com.oven.server.common.response.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,15 +26,15 @@ public class MyPageController {
 
     @Operation(summary = "찜한 작품 조회")
     @GetMapping("/likes")
-    public Response<List<GetWorkListDto>> getInterestingWork(@AuthenticationPrincipal User user) {
-        List<GetWorkListDto> workList = myPageService.getLikes(user);
+    public Response<List<WorkListDto>> getInterestingWork(@AuthenticationPrincipal User user) {
+        List<WorkListDto> workList = myPageService.getLikes(user);
         return Response.success(ResponseCode.SUCCESS_OK, workList);
     }
 
     @Operation(summary = "평가한 작품 조회")
     @GetMapping("/ratings")
-    public Response<List<GetWorkListDto>> getRatingWork(@AuthenticationPrincipal User user) {
-        List<GetWorkListDto> workList = myPageService.getRatings(user);
+    public Response<List<WorkListDto>> getRatingWork(@AuthenticationPrincipal User user) {
+        List<WorkListDto> workList = myPageService.getRatings(user);
         return Response.success(ResponseCode.SUCCESS_OK, workList);
     }
 

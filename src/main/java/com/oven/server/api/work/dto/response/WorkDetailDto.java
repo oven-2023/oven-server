@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Schema(description="작품 상세 조회용(작품 제목, 포스터 이미지 주소)")
-public class GetWorkDetailDto {
+public class WorkDetailDto {
 
     @Schema(description = "작품 제목(한글)", example = "택배 기사")
     private String titleKr;
@@ -38,7 +38,7 @@ public class GetWorkDetailDto {
     private String poster;
 
     @Schema(description = "제공 OTT", example = "넷플릭스, 왓챠, 디즈니+")
-    private List<GetProviderDto> providerList;
+    private List<ProviderDto> providerList;
 
     @Schema(description = "장르", example = "SF, 액션, 드라마, 스릴러, 미스터리")
     private String genre;

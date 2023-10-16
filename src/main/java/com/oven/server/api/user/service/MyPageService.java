@@ -3,7 +3,7 @@ package com.oven.server.api.user.service;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.repository.InterestingWorkRepository;
 import com.oven.server.api.user.repository.RatingWorkRepository;
-import com.oven.server.api.work.dto.response.GetWorkListDto;
+import com.oven.server.api.work.dto.response.WorkListDto;
 import com.oven.server.common.exception.BaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,12 @@ public class MyPageService {
     private final RatingWorkRepository ratingWorkRepository;
 
     @Transactional(readOnly = true)
-    public List<GetWorkListDto> getLikes(User user) throws BaseException {
+    public List<WorkListDto> getLikes(User user) throws BaseException {
 
-        List<GetWorkListDto> interestingWorkDtoList = interestingWorkRepository.findByUserOrderByCreatedAtDesc(user)
+        List<WorkListDto> interestingWorkDtoList = interestingWorkRepository.findByUserOrderByCreatedAtDesc(user)
                 .stream()
                 .map(
-                        interestingWork -> GetWorkListDto.builder()
+                        interestingWork -> WorkListDto.builder()
                                 .workId(interestingWork.getWork().getId())
                                 .poster(interestingWork.getWork().getPoster())
                                 .title(interestingWork.getWork().getTitleKr())
@@ -40,12 +40,12 @@ public class MyPageService {
     }
 
     @Transactional(readOnly = true)
-    public List<GetWorkListDto> getRatings(User user) {
+    public List<WorkListDto> getRatings(User user) {
 
-        List<GetWorkListDto> ratingWorkDtoList = ratingWorkRepository.findByUserOrderByCreatedAtDesc(user)
+        List<WorkListDto> ratingWorkDtoList = ratingWorkRepository.findByUserOrderByCreatedAtDesc(user)
                 .stream()
                 .map(
-                        ratingWork -> GetWorkListDto.builder()
+                        ratingWork -> WorkListDto.builder()
                                 .workId(ratingWork.getWork().getId())
                                 .poster(ratingWork.getWork().getPoster())
                                 .title(ratingWork.getWork().getTitleKr())
