@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.api.work.domain.Work;
-import com.oven.server.api.work.dto.response.GetWorkListDto;
+import com.oven.server.api.work.dto.response.WorkListDto;
 import com.oven.server.api.work.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class GetRecommendWorksService {
 
     private final WorkRepository workRepository;
 
-    public List<GetWorkListDto> getRecommendWorkList(String dataFromFlask) throws BaseException, JsonProcessingException {
+    public List<WorkListDto> getRecommendWorkList(String dataFromFlask) throws BaseException, JsonProcessingException {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -30,10 +30,10 @@ public class GetRecommendWorksService {
             recommendations.add(workRepository.findById(numpArray[i]).get());
         }
 
-        List<GetWorkListDto> recommendWorkDtoList = recommendations
+        List<WorkListDto> recommendWorkDtoList = recommendations
                 .stream()
                 .map(
-                        recommendWork -> GetWorkListDto
+                        recommendWork -> WorkListDto
                                 .builder()
                                 .workId(recommendWork.getId())
                                 .title(recommendWork.getTitleKr())

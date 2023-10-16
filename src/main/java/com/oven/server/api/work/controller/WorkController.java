@@ -2,7 +2,7 @@ package com.oven.server.api.work.controller;
 
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.work.dto.request.PostRatingDto;
-import com.oven.server.api.work.dto.response.GetWorkDetailDto;
+import com.oven.server.api.work.dto.response.WorkDetailDto;
 import com.oven.server.api.work.service.GetWorkDetailService;
 import com.oven.server.api.work.service.PostInterestingWorkService;
 import com.oven.server.api.work.service.PostRatingWorkService;
@@ -26,8 +26,8 @@ public class WorkController {
 
     @Operation(summary = "작품 상세 조회")
     @GetMapping("/{workId}")
-    public Response<GetWorkDetailDto> getRecommendWorkList(@PathVariable("workId") Long workId) {
-        GetWorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(workId);
+    public Response<WorkDetailDto> getRecommendWorkList(@PathVariable("workId") Long workId) {
+        WorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(workId);
         return Response.success(ResponseCode.SUCCESS_OK, workDetailDto);
     }
 

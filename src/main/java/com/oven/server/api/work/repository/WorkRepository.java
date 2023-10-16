@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface WorkRepository extends JpaRepository<Work, Long> {
+@Repository("WorkRepositorySupport")
+public interface WorkRepository extends JpaRepository<Work, Long>, WorkRepositoryCustom {
 
     List<Work> findByTitleKrContaining(String keyword);
 

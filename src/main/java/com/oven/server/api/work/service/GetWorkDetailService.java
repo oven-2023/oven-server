@@ -1,8 +1,8 @@
 package com.oven.server.api.work.service;
 
 import com.oven.server.api.work.domain.Work;
-import com.oven.server.api.work.dto.response.GetProviderDto;
-import com.oven.server.api.work.dto.response.GetWorkDetailDto;
+import com.oven.server.api.work.dto.response.ProviderDto;
+import com.oven.server.api.work.dto.response.WorkDetailDto;
 import com.oven.server.api.work.repository.WorkProviderRepository;
 import com.oven.server.api.work.repository.WorkRepository;
 import com.oven.server.common.exception.BaseException;
@@ -19,11 +19,11 @@ public class GetWorkDetailService {
     private final WorkRepository workRepository;
     private final WorkProviderRepository workProviderRepository;
 
-    public GetWorkDetailDto getWorkDetail(Long workId) throws BaseException {
+    public WorkDetailDto getWorkDetail(Long workId) throws BaseException {
 
         Work findWork = workRepository.findById(workId).orElseThrow(() -> new BaseException(ResponseCode.WORK_NOT_FOUND));
 
-        GetWorkDetailDto workDetailDto = GetWorkDetailDto.builder()
+        WorkDetailDto workDetailDto = WorkDetailDto.builder()
                 .titleKr(findWork.getTitleKr())
                 .titleEng(findWork.getTitleEng())
                 .poster(findWork.getPoster())
@@ -35,7 +35,7 @@ public class GetWorkDetailService {
                 .providerList(workProviderRepository.findWorkProviderByWorkId(workId)
                         .stream()
                         .map(
-                                provider -> GetProviderDto
+                                provider -> ProviderDto
                                         .builder()
                                         .name(provider.getProvider().getName())
                                         .build()
