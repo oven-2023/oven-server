@@ -22,22 +22,22 @@ public class WorkRepositoryCustomImpl extends QuerydslRepositorySupport implemen
     }
 
     @Override
-    public List<Work> searchWork(Pageable pageable, Long workId, String keyword) {
+    public List<Work> searchWork(int size, Long workId, String keyword) {
 
         return queryFactory
                 .select(work)
                 .from(work)
                 .where(
-                        ltWorkId(workId),
+                        gtWorkId(workId),
                         keywordContaining(keyword)
                 )
-                .limit(pageable.getPageSize() + 1)
+                .limit(size + 1)
                 .fetch();
 
     }
 
-    private BooleanExpression ltWorkId(Long workId) {
-        return (workId == null) ? null : work.id.lt(workId);
+    private BooleanExpression gtWorkId(Long workId) {
+        return (workId == null) ? null : work.id.gt(workId);
     }
 
     private BooleanExpression keywordContaining(String keyword) {

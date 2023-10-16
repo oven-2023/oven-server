@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface WorkRepositoryCustom {
 
-    List<Work> searchWork(Pageable pageable, Long workId, String keyword);
+    List<Work> searchWork(int size, Long workId, String keyword);
 }

@@ -11,8 +11,6 @@ import java.util.List;
 @Repository("WorkRepositorySupport")
 public interface WorkRepository extends JpaRepository<Work, Long>, WorkRepositoryCustom {
 
-    List<Work> findByTitleKrContaining(String keyword);
-
     List<Work> findTop10ByOrderByIdAsc();
 
     @Query(value = "SELECT * FROM oven.work order by RAND() limit 4",nativeQuery = true)
