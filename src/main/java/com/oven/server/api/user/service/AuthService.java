@@ -9,6 +9,7 @@ import com.oven.server.api.user.dto.request.RefreshTokenRequest;
 import com.oven.server.api.user.dto.response.AccessTokenResponse;
 import com.oven.server.api.user.dto.response.IdCheckResponse;
 import com.oven.server.api.user.dto.response.JwtTokenResponse;
+import com.oven.server.api.user.dto.response.LoginSuccessResponse;
 import com.oven.server.api.user.repository.RefreshTokenRepository;
 import com.oven.server.api.user.repository.UserRepository;
 import com.oven.server.common.exception.BaseException;
@@ -54,7 +55,7 @@ public class AuthService {
 
     }
 
-    public JwtTokenResponse login(LoginRequest loginRequest) {
+    public LoginSuccessResponse login(LoginRequest loginRequest) {
 
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new BaseException(ResponseCode.ID_NOT_FOUND));
@@ -63,7 +64,11 @@ public class AuthService {
             throw new BaseException(ResponseCode.PASSWORD_NOT_MATCH);
         }
 
-        return jwtTokenProvider.createJwtToken(user.getUsername());
+        return LoginSuccessResponse.builder()
+                .jwtTokenResponse(jwtTokenProvider.createJwtToken(user.getUsername()))
+                .nickname(user.getNickname())
+                .build();
+
     }
 
     public void logout(User user, RefreshTokenRequest refreshTokenRequest) {
