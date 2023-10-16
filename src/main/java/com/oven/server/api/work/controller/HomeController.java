@@ -38,7 +38,8 @@ public class HomeController {
 
     @GetMapping("/recommendation/works")
     public void springToFlask(@AuthenticationPrincipal User user) {
-        springToFlaskService.springToFlask(user);
+        String csvContent = springToFlaskService.writing();
+        springToFlaskService.springToFlask(user, csvContent);
     }
 
     @Operation(summary = "추천 작품 조회 API")
