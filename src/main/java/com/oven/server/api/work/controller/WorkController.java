@@ -27,8 +27,8 @@ public class WorkController {
 
     @Operation(summary = "작품 상세 조회")
     @GetMapping("/{workId}")
-    public Response<WorkDetailDto> getRecommendWorkList(@PathVariable("workId") Long workId) {
-        WorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(workId);
+    public Response<WorkDetailDto> getRecommendWorkList(@AuthenticationPrincipal User user, @PathVariable("workId") Long workId) {
+        WorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(user, workId);
         return Response.success(ResponseCode.SUCCESS_OK, workDetailDto);
     }
 

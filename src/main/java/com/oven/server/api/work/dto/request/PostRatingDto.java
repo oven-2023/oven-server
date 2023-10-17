@@ -9,6 +9,6 @@ import lombok.Getter;
 public class PostRatingDto {
 
     @Schema(description = "평점", example = "3")
-    private Integer rating;
+    private Float rating;
 
 }
