@@ -35,26 +35,6 @@ public class HomeController {
 
     }
 
-    @GetMapping("/recommendation/works")
-    public void springToFlask(@AuthenticationPrincipal User user) {
-        String csvContent = springToFlaskService.writing();
-        springToFlaskService.springToFlask(user, csvContent);
-    }
-
-    @Operation(summary = "추천 작품 조회 API")
-    @PostMapping("/recommendation/works")
-    public Response<List<WorkListDto>> getRecommendWorkList(@RequestBody String dataFromFlask) {
-
-        try {
-            List<WorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(dataFromFlask);
-            return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
  // /home/recommendation/provider
 
 
