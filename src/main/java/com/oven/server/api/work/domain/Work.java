@@ -26,7 +26,7 @@ public class Work extends BaseEntity {
 
     private int year;
 
-    private String rating;  // 관람연령등급
+    private String ageRating;  // 관람연령등급
 
     private String director;
 

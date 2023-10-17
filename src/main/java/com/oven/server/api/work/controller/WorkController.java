@@ -2,6 +2,7 @@ package com.oven.server.api.work.controller;
 
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.work.dto.request.PostRatingDto;
+import com.oven.server.api.work.dto.response.PostLikeResponse;
 import com.oven.server.api.work.dto.response.WorkDetailDto;
 import com.oven.server.api.work.service.GetWorkDetailService;
 import com.oven.server.api.work.service.PostInterestingWorkService;
@@ -26,16 +27,16 @@ public class WorkController {
 
     @Operation(summary = "작품 상세 조회")
     @GetMapping("/{workId}")
-    public Response<WorkDetailDto> getRecommendWorkList(@PathVariable("workId") Long workId) {
-        WorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(workId);
+    public Response<WorkDetailDto> getRecommendWorkList(@AuthenticationPrincipal User user, @PathVariable("workId") Long workId) {
+        WorkDetailDto workDetailDto = getWorkDetailService.getWorkDetail(user, workId);
         return Response.success(ResponseCode.SUCCESS_OK, workDetailDto);
     }
 
     @Operation(summary = "작품 좋아요")
     @PostMapping("/{workId}/like")
-    public Response<Void> postInterestingWork(@AuthenticationPrincipal User user, @PathVariable("workId") Long workId) {
-        postInterestingWorkService.postInterestingWork(user, workId);
-        return Response.success(ResponseCode.SUCCESS_CREATED);
+    public Response<PostLikeResponse> postInterestingWork(@AuthenticationPrincipal User user, @PathVariable("workId") Long workId) {
+        PostLikeResponse response = postInterestingWorkService.postLike(user, workId);
+        return Response.success(ResponseCode.SUCCESS_CREATED, response);
     }
 
     @Operation(summary = "작품 평점 추가")

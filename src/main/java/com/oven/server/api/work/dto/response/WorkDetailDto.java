@@ -23,7 +23,7 @@ public class WorkDetailDto {
     private int year;
 
     @Schema(description = "관람연령등급", example = "15세이상관람가")
-    private String rating;
+    private String ageRating;
 
     @Schema(description = "감독", example = "조의석")
     private String director;
@@ -42,5 +42,11 @@ public class WorkDetailDto {
 
     @Schema(description = "장르", example = "SF, 액션, 드라마, 스릴러, 미스터리")
     private String genre;
+
+    @Schema(description = "좋아요 여부")
+    private boolean liked;
+
+    @Schema(description = "유저 평점(null이면 평가 안한 것)")
+    private Float rating;
 
 }

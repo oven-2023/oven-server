@@ -9,7 +9,7 @@ public class JwtTokenResponse {
 
     @Schema(description = "액세스 토큰")
     private String accessToken;
-    @Schema(description = "리프레쉬 토큰", example = "오븐좋아")
+    @Schema(description = "리프레쉬 토큰")
     private String refreshToken;
 
     @Builder
