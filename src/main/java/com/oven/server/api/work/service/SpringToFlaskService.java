@@ -49,37 +49,4 @@ public class SpringToFlaskService {
         }
     }
 
-    public String writing() {
-        StringWriter csvData = new StringWriter();
-        BufferedWriter bw = new BufferedWriter(csvData);
-        String NEWLINE = System.lineSeparator();
-
-        try {
-            Random random = new Random();
-            List<User> users = userRepository.findAll();
-
-            bw.write("user_id, work_id, rating");
-            bw.write(NEWLINE);
-
-            for (int i = 0; i < users.size(); i++) {
-                List<Work> randomWorks = workRepository.findRandoms();
-                String userIdStr = String.valueOf(users.get(i).getId());
-                for (int j = 0; j < randomWorks.size(); j++) {
-                    String workIdStr = String.valueOf(randomWorks.get(j).getId());
-                    String rating = String.valueOf(random.nextInt(4) + 2);
-                    String totalstr = userIdStr + "," + workIdStr + "," + rating;
-                    bw.write(totalstr);
-                    bw.write("\n");
-                }
-            }
-
-            bw.flush();
-            String csvContent = csvData.toString();
-            return csvContent;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new BaseException(ResponseCode.FAIL_BAD_REQUEST);
-        }
-    }
-
 }
