@@ -4,6 +4,7 @@ import com.oven.server.api.user.domain.InterestingWork;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.api.user.repository.InterestingWorkRepository;
 import com.oven.server.api.work.domain.Work;
+import com.oven.server.api.work.dto.response.PostLikeResponse;
 import com.oven.server.api.work.repository.WorkRepository;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.common.response.ResponseCode;
@@ -20,19 +21,26 @@ public class PostInterestingWorkService {
     private final WorkRepository workRepository;
     private final InterestingWorkRepository interestingWorkRepository;
 
-    public void postInterestingWork(@AuthenticationPrincipal User user, Long workId) throws BaseException {
+    public PostLikeResponse postLike(@AuthenticationPrincipal User user, Long workId) throws BaseException {
 
         userValidate(user);
         Work work = workValidate(workId);
 
         InterestingWork interestingWork = interestingWorkRepository.findByUserAndWork(user, work);
 
+        boolean liked = false;
+
         if(interestingWork == null) {
             InterestingWork newInterestingWork = new InterestingWork(user, work);
             interestingWorkRepository.save(newInterestingWork);
+            liked = true;
         } else {
             interestingWorkRepository.delete(interestingWork);
         }
+
+        return PostLikeResponse.builder()
+                .liked(liked)
+                .build();
 
     }
 
