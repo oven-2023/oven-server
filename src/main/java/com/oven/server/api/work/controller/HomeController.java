@@ -35,9 +35,20 @@ public class HomeController {
 
     }
 
- // /home/recommendation/provider
+    @GetMapping("/recommendation/works")
+    public Response<List<WorkListDto>> getRecommendWorkList(@AuthenticationPrincipal User user) {
+        String response = springToFlaskService.springToFlask(user);
+
+        try {
+            List<WorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(response);
+            return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
+    // /home/recommendation/provider
 
 
 }
