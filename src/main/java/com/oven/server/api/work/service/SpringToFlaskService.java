@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,7 +39,10 @@ public class SpringToFlaskService {
         HttpEntity<String> requestEntity = new HttpEntity<>(userId, headers);
 
         //RestTemplate를 사용하여 POST 요청 보내기
-        RestTemplate restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setReadTimeout(10000); // 읽기 타임아웃을 10초로 설정 (밀리초)
+        factory.setConnectTimeout(5000); // 연결 타임아웃을 5초로 설정 (밀리초)
+        RestTemplate restTemplate = new RestTemplate(factory);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(flaskApiUrl, requestEntity, String.class);
         
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
