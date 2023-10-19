@@ -14,6 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedWriter;
+import java.io.StringWriter;
+import java.util.List;
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 public class SpringToFlaskService {
@@ -21,8 +26,8 @@ public class SpringToFlaskService {
     private final UserRepository userRepository;
     private final WorkRepository workRepository;
 
-    public String springToFlask(User user) {
-        String flaskApiUrl = "http://127.0.0.1:6000/spring";
+    public void springToFlask(User user, String csvContent) {
+        String flaskApiUrl = "http://43.201.68.242:5000/spring";
         String userId = String.valueOf(user.getId());
 
         //HTTP 요청 헤더 설정
@@ -30,7 +35,7 @@ public class SpringToFlaskService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         //HTTP 요청 본문 설정
-        HttpEntity<String> requestEntity = new HttpEntity<>(userId, headers);
+        HttpEntity<String[]> requestEntity = new HttpEntity<>(new String[]{userId, csvContent}, headers);
 
         //RestTemplate를 사용하여 POST 요청 보내기
         RestTemplate restTemplate = new RestTemplate();
@@ -38,11 +43,9 @@ public class SpringToFlaskService {
         
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String response = responseEntity.getBody();
-            return response;
-//            System.out.println("플라스크 서버 응답: " + response);
+            System.out.println("플라스크 서버 응답: " + response);
         } else {
-//            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
-            return responseEntity.getStatusCode().toString();
+            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
         }
     }
 
