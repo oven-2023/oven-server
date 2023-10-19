@@ -14,6 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedWriter;
+import java.io.StringWriter;
+import java.util.List;
+import java.util.Random;
+
 @Service
 @RequiredArgsConstructor
 public class SpringToFlaskService {
@@ -41,7 +46,7 @@ public class SpringToFlaskService {
             System.out.println("플라스크 서버 응답: " + response);
             return response;
         } else {
-//            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
+            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
             return responseEntity.getStatusCode().toString();
         }
     }
