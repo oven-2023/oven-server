@@ -22,7 +22,7 @@ public class SpringToFlaskService {
     private final WorkRepository workRepository;
 
     public String springToFlask(User user) {
-        String flaskApiUrl = "http://127.0.0.1:6000/spring";
+        String flaskApiUrl = "http://172.17.0.2:6000/spring";
         String userId = String.valueOf(user.getId());
 
         //HTTP 요청 헤더 설정
@@ -38,8 +38,8 @@ public class SpringToFlaskService {
         
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String response = responseEntity.getBody();
+            System.out.println("플라스크 서버 응답: " + response);
             return response;
-//            System.out.println("플라스크 서버 응답: " + response);
         } else {
 //            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
             return responseEntity.getStatusCode().toString();
