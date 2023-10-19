@@ -31,7 +31,10 @@ public enum ResponseCode {
     PASSWORD_NOT_MATCH(BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
 
     // Work
-    WORK_NOT_FOUND(BAD_REQUEST, "작품을 찾을 수 없습니다.");
+    WORK_NOT_FOUND(BAD_REQUEST, "작품을 찾을 수 없습니다."),
+
+    // Chat
+    PROVIDER_NOT_FOUND(BAD_REQUEST, "요청하신 OTT를 찾을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;
