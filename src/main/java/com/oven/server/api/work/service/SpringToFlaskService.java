@@ -41,6 +41,7 @@ public class SpringToFlaskService {
 
         //HTTP 요청 본문 설정
         HttpEntity<String> requestEntity = new HttpEntity<>(userId, headers);
+        log.info("requestEntity: " + requestEntity);
 
         //RestTemplate를 사용하여 POST 요청 보내기
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
