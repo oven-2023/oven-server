@@ -14,7 +14,7 @@ services:
 
   flask:
     container_name: flask
-    image: tldud/flask-image
+    image: see101702/flask-image
     ports:
       - "6060:6060"
     depends_on:
