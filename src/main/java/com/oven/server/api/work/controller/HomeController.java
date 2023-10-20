@@ -7,10 +7,11 @@ import com.oven.server.api.user.domain.User;
 import com.oven.server.api.work.dto.response.WorkListDto;
 import com.oven.server.api.work.service.GetPopularWorkListService;
 import com.oven.server.api.work.service.GetRecommendWorksService;
-import com.oven.server.api.work.service.SpringToFlaskService;
+import com.oven.server.feign.FlaskFeignClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,14 @@ public class HomeController {
 
     private final GetPopularWorkListService getPopularWorkListService;
     private final GetRecommendWorksService getRecommendWorkListService;
-    private final SpringToFlaskService springToFlaskService;
+    private final FlaskFeignClient flaskFeignClient;
+
+    @Autowired
+    public HomeController(GetPopularWorkListService getPopularWorkListService, GetRecommendWorksService getRecommendWorkListService, FlaskFeignClient flaskFeignClient) {
+        this.getPopularWorkListService = getPopularWorkListService;
+        this.getRecommendWorkListService = getRecommendWorkListService;
+        this.flaskFeignClient = flaskFeignClient;
+    }
 
     @Operation(summary = "인기 작품 조회 API")
     @GetMapping("/populars")
@@ -37,8 +45,9 @@ public class HomeController {
 
     @GetMapping("/recommendation/works")
     public Response<List<WorkListDto>> getRecommendWorkList(@AuthenticationPrincipal User user) {
-        String response = springToFlaskService.springToFlask(user);
 
+        String userId = String.valueOf(user.getId());
+        String response = flaskFeignClient.getDataFromFlask(userId);
         try {
             List<WorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(response);
             return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
