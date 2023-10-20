@@ -7,6 +7,7 @@ import com.oven.server.api.work.repository.WorkRepository;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.common.response.ResponseCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Random;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SpringToFlaskService {
@@ -28,6 +30,8 @@ public class SpringToFlaskService {
     private final WorkRepository workRepository;
 
     public String springToFlask(User user) {
+        log.info(String.valueOf(user));
+
         String flaskApiUrl = "http://0.0.0.0:6000/spring";
         String userId = String.valueOf(user.getId());
 
@@ -47,10 +51,11 @@ public class SpringToFlaskService {
         
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String response = responseEntity.getBody();
-            System.out.println("플라스크 서버 응답: " + response);
+            log.info("플라스크 서버 응답: " + response);
             return response;
         } else {
-            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
+//            System.out.println("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
+            log.info("HTTP 요청 실패 " + responseEntity.getStatusCodeValue());
             return responseEntity.getStatusCode().toString();
         }
     }
