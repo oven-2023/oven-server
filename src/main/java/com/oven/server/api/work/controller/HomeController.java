@@ -19,15 +19,12 @@ import java.util.List;
 
 @Tag(name="Home", description = "홈 화면 API")
 @RestController
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @RequestMapping("/home")
 public class HomeController {
 
-    @Autowired
     private final GetPopularWorkListService getPopularWorkListService;
-    @Autowired
     private final GetRecommendWorksService getRecommendWorkListService;
-    @Autowired
     private final FlaskFeignClient flaskFeignClient;
 
     @Operation(summary = "인기 작품 조회 API")
@@ -52,6 +49,12 @@ public class HomeController {
         }
     }
 
+    @Autowired
+    public HomeController(GetPopularWorkListService getPopularWorkListService, GetRecommendWorksService getRecommendWorkListService, FlaskFeignClient flaskFeignClient) {
+        this.getPopularWorkListService = getPopularWorkListService;
+        this.getRecommendWorkListService = getRecommendWorkListService;
+        this.flaskFeignClient = flaskFeignClient;
+    }
 
     // /home/recommendation/provider
 
