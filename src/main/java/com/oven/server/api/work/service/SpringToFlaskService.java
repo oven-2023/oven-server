@@ -32,7 +32,7 @@ public class SpringToFlaskService {
     public String springToFlask(User user) {
         log.info(String.valueOf(user));
 
-        String flaskApiUrl = "http://0.0.0.0:6000/spring";
+        String flaskApiUrl = "http://172.26.0.5:6000/spring";
         String userId = String.valueOf(user.getId());
 
         //HTTP 요청 헤더 설정
