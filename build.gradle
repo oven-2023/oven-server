@@ -11,9 +11,19 @@ java {
 	sourceCompatibility = '17'
 }
 
+ext {
+	springCloudVersion = '2021.0.3'
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
 
@@ -51,7 +61,7 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 
-	implementation "org.apache.httpcomponents:httpclient:4.5.14"
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
 
