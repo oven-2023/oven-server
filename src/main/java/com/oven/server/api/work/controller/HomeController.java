@@ -23,8 +23,11 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeController {
 
+    @Autowired
     private final GetPopularWorkListService getPopularWorkListService;
+    @Autowired
     private final GetRecommendWorksService getRecommendWorkListService;
+    @Autowired
     private final FlaskFeignClient flaskFeignClient;
 
     @Operation(summary = "인기 작품 조회 API")
