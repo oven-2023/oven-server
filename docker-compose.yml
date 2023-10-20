@@ -16,7 +16,7 @@ services:
     container_name: flask
     image: see101702/flask-image
     ports:
-      - "6060:6060"
+      - "6000:6000"
     depends_on:
       - web
     environment:
