@@ -27,13 +27,6 @@ public class HomeController {
     private final GetRecommendWorksService getRecommendWorkListService;
     private final FlaskFeignClient flaskFeignClient;
 
-    @Autowired
-    public HomeController(GetPopularWorkListService getPopularWorkListService, GetRecommendWorksService getRecommendWorkListService, FlaskFeignClient flaskFeignClient) {
-        this.getPopularWorkListService = getPopularWorkListService;
-        this.getRecommendWorkListService = getRecommendWorkListService;
-        this.flaskFeignClient = flaskFeignClient;
-    }
-
     @Operation(summary = "인기 작품 조회 API")
     @GetMapping("/populars")
     public Response<List<WorkListDto>> getPopularWorkList() {
