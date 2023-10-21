@@ -15,8 +15,10 @@ services:
   flask:
     container_name: flask
     image: see101702/flask-image
+    ports:
+      - "6000:5000"
     expose:
-      - "6000"
+      - "5000"
     depends_on:
       - web
     environment:
