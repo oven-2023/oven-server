@@ -1,6 +1,7 @@
 package com.oven.server.api.work.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.api.work.domain.Work;
@@ -23,12 +24,9 @@ public class GetRecommendWorksService {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String[] stringArray = objectMapper.readValue(dataFromFlask, String[].class);
-
-        long[] longArray = new long[stringArray.length];
-        for (int i = 0; i < stringArray.length; i++) {
-            longArray[i] = Long.parseLong(stringArray[i]);
-        }
+//        String[] stringArray = objectMapper.readValue(dataFromFlask, String[].class);
+        List<String> stringList = objectMapper.readValue(dataFromFlask, new TypeReference<List<String>>() {});
+        long[] longArray = stringList.stream().mapToLong(Long::parseLong).toArray();
 
         List<Work> recommendations = new ArrayList<Work>();
 
