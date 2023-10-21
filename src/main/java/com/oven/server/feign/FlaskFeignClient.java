@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "flask", url = "http://flask:6000")
+@FeignClient(name = "flask", url = "http://flask:5000")
 public interface FlaskFeignClient {
     @RequestMapping(method = RequestMethod.GET, value = "/spring")
     String getDataFromFlask(@RequestParam("userId") String userId);
