@@ -23,11 +23,17 @@ public class GetRecommendWorksService {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
-        long[] numpArray = objectMapper.readValue(dataFromFlask, long[].class);
+        String[] stringArray = objectMapper.readValue(dataFromFlask, String[].class);
+
+        long[] longArray = new long[stringArray.length];
+        for (int i = 0; i < stringArray.length; i++) {
+            longArray[i] = Long.parseLong(stringArray[i]);
+        }
+
         List<Work> recommendations = new ArrayList<Work>();
 
-        for (int i = 0; i < numpArray.length; i++) {
-            recommendations.add(workRepository.findById(numpArray[i]).get());
+        for (int i = 0; i < longArray.length; i++) {
+            recommendations.add(workRepository.findById(longArray[i]).get());
         }
 
         List<WorkListDto> recommendWorkDtoList = recommendations
