@@ -41,6 +41,7 @@ public class HomeController {
 
         String userId = String.valueOf(user.getId());
         String response = flaskFeignClient.getDataFromFlask(userId);
+        System.out.println(response);
         try {
             List<WorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(response);
             return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
