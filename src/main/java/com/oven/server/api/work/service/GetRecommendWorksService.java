@@ -24,8 +24,9 @@ public class GetRecommendWorksService {
 
 
         ObjectMapper objectMapper = new ObjectMapper();
+        dataFromFlask = dataFromFlask.substring(1,dataFromFlask.length()-1);
 //        String[] stringArray = objectMapper.readValue(dataFromFlask, String[].class);
-        List<String> stringList = objectMapper.readValue(dataFromFlask, new TypeReference<List<String>>() {});
+        List<String> stringList = objectMapper.readValue(dataFromFlask, new TypeReference<ArrayList<String>>() {});
         long[] longArray = stringList.stream().mapToLong(Long::parseLong).toArray();
 
         List<Work> recommendations = new ArrayList<Work>();
