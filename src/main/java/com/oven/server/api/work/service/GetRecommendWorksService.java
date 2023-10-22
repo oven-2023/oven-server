@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,19 +26,16 @@ public class GetRecommendWorksService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println(dataFromFlask);
+        System.out.println(dataFromFlask.getClass().getName());
 
-        Long[] longArray = objectMapper.readValue(dataFromFlask, Long[].class);
+        Map<String, List<Long>> dataMap = objectMapper.readValue(dataFromFlask, new TypeReference<Map<String, List<Long>>>() {});
 
-        long[] primitiveLongArray = new long[longArray.length];
-        for (int i = 0; i < longArray.length; i++) {
-            primitiveLongArray[i] = longArray[i];
-        }
-        System.out.println(primitiveLongArray[0]);
+        List<Long> resultList = dataMap.get("result");
 
         List<Work> recommendations = new ArrayList<Work>();
 
-        for (int i = 0; i < primitiveLongArray.length; i++) {
-            recommendations.add(workRepository.findById(primitiveLongArray[i]).get());
+        for (int i = 0; i < resultList.size(); i++) {
+            recommendations.add(workRepository.findById(resultList.get(i)).get());
         }
 
         List<WorkListDto> recommendWorkDtoList = recommendations
