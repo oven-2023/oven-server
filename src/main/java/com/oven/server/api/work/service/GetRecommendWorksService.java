@@ -25,15 +25,19 @@ public class GetRecommendWorksService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println(dataFromFlask);
-//        String[] stringArray = objectMapper.readValue(dataFromFlask, String[].class);
-        List<String> stringList = objectMapper.readValue(dataFromFlask, List.class);
-        long[] longArray = stringList.stream().mapToLong(Long::parseLong).toArray();
-        System.out.println(longArray[0]);
+
+        Long[] longArray = objectMapper.readValue(dataFromFlask, Long[].class);
+
+        long[] primitiveLongArray = new long[longArray.length];
+        for (int i = 0; i < longArray.length; i++) {
+            primitiveLongArray[i] = longArray[i];
+        }
+        System.out.println(primitiveLongArray[0]);
 
         List<Work> recommendations = new ArrayList<Work>();
 
-        for (int i = 0; i < longArray.length; i++) {
-            recommendations.add(workRepository.findById(longArray[i]).get());
+        for (int i = 0; i < primitiveLongArray.length; i++) {
+            recommendations.add(workRepository.findById(primitiveLongArray[i]).get());
         }
 
         List<WorkListDto> recommendWorkDtoList = recommendations
