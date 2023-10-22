@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,14 +29,18 @@ public class GetRecommendWorksService {
         System.out.println(dataFromFlask);
         System.out.println(dataFromFlask.getClass().getName());
 
-        Map<String, List<Long>> dataMap = objectMapper.readValue(dataFromFlask, new TypeReference<Map<String, List<Long>>>() {});
+        Map<String, String> dataMap = objectMapper.readValue(dataFromFlask, new TypeReference<Map<String, String>>() {});
+        String resultString = dataMap.get("result");
 
-        List<Long> resultList = dataMap.get("result");
+        List<Long> longList = Arrays.stream(resultString.split(","))
+                .map(s -> s.replaceAll("[\\[\\]\\\\\"]", ""))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
 
         List<Work> recommendations = new ArrayList<Work>();
 
-        for (int i = 0; i < resultList.size(); i++) {
-            recommendations.add(workRepository.findById(resultList.get(i)).get());
+        for (int i = 0; i < longList.size(); i++) {
+            recommendations.add(workRepository.findById(longList.get(i)).get());
         }
 
         List<WorkListDto> recommendWorkDtoList = recommendations
