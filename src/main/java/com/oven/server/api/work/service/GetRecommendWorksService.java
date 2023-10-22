@@ -33,7 +33,7 @@ public class GetRecommendWorksService {
         String resultString = dataMap.get("result");
 
         List<Long> longList = Arrays.stream(resultString.split(","))
-                .map(s -> s.replaceAll("[\\[\\]\\\\\"]", ""))
+                .map(s -> s.replaceAll("[\\[\\]\\\\\"]", "")).map(String::trim)
                 .map(Long::parseLong)
                 .collect(Collectors.toList());
 
