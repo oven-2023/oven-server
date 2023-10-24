@@ -26,6 +26,8 @@ public class Chatroom extends BaseEntity {
 
     private String title;
 
+    private int wholeNum;
+
     private int count;
 
 }
