@@ -40,8 +40,11 @@ public class GetChatroomService {
                 .stream()
                 .map(
                         chatroom -> ChatroomListDto.builder()
+                                .chatroomId(chatroom.getId())
+                                .providerId(chatroom.getProvider().getId())
                                 .title(chatroom.getTitle())
                                 .count(chatroom.getCount())
+                                .wholeNum(chatroom.getWholeNum())
                                 .build()
                 ).collect(Collectors.toList());
 
