@@ -2,7 +2,6 @@ package com.oven.server.api.chat.domain;
 
 import com.oven.server.api.work.domain.Provider;
 import com.oven.server.common.BaseEntity;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 import lombok.Getter;
 
