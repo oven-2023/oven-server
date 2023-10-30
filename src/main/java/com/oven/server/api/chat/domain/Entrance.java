@@ -3,6 +3,7 @@ package com.oven.server.api.chat.domain;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
 public class Entrance extends BaseEntity {
@@ -19,5 +20,11 @@ public class Entrance extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
     private Chatroom chatroom;
+
+    @Builder
+    public Entrance(User user, Chatroom chatroom) {
+        this.user = user;
+        this.chatroom = chatroom;
+    }
 
 }
