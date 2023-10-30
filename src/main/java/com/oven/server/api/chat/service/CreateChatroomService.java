@@ -27,6 +27,7 @@ public class CreateChatroomService {
     public CreateChatroomResponse createChatroom(User user, CreateChatroomRequest request, Long providerId) {
 
         Chatroom newChatroom = Chatroom.builder()
+                .roomAdmin(user)
                 .title(request.getTitle())
                 .wholeNum(request.getWholeNum())
                 .provider(providerRepository.findById(providerId).orElseThrow(

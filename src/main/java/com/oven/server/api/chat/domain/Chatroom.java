@@ -1,5 +1,6 @@
 package com.oven.server.api.chat.domain;
 
+import com.oven.server.api.user.domain.User;
 import com.oven.server.api.work.domain.Provider;
 import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
@@ -26,6 +27,10 @@ public class Chatroom extends BaseEntity {
     @JoinColumn(name = "provider_id")
     private Provider provider;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User roomAdmin;
+
     private String title;
 
     private int wholeNum;
@@ -33,8 +38,9 @@ public class Chatroom extends BaseEntity {
     private int count;
 
     @Builder
-    public Chatroom(Provider provider, String title, int wholeNum) {
+    public Chatroom(User roomAdmin, Provider provider, String title, int wholeNum) {
         this.uuid = UUID.randomUUID();
+        this.roomAdmin = roomAdmin;
         this.provider = provider;
         this.title = title;
         this.wholeNum = wholeNum;
