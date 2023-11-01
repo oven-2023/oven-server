@@ -4,8 +4,10 @@ import com.oven.server.api.user.domain.User;
 import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
 public class Entrance extends BaseEntity {
 
     @Id
