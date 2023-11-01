@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Entity
 @Getter
 @NoArgsConstructor
@@ -19,9 +17,6 @@ public class Chatroom extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chatroom_id")
     private Long id;
-
-    @Column(name = "chatroom_uuid", unique = true)
-    private UUID uuid;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provider_id")
@@ -39,12 +34,21 @@ public class Chatroom extends BaseEntity {
 
     @Builder
     public Chatroom(User roomAdmin, Provider provider, String title, int wholeNum) {
-        this.uuid = UUID.randomUUID();
         this.roomAdmin = roomAdmin;
         this.provider = provider;
         this.title = title;
         this.wholeNum = wholeNum;
         this.count = 1;
     }
+
+    public void enter() {
+        this.count++;
+    }
+
+    public void leave() {
+        this.count--;
+    }
+
+
 
 }

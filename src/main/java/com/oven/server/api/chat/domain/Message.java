@@ -3,9 +3,11 @@ package com.oven.server.api.chat.domain;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 
 @Entity
+@Getter
 public class Message extends BaseEntity {
 
     @Id

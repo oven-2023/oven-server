@@ -3,7 +3,9 @@ package com.oven.server.api.chat.controller;
 import com.oven.server.api.chat.dto.request.CreateChatroomRequest;
 import com.oven.server.api.chat.dto.response.ChatroomListDto;
 import com.oven.server.api.chat.dto.response.CreateChatroomResponse;
+import com.oven.server.api.chat.dto.response.EnterChatroomResponse;
 import com.oven.server.api.chat.service.CreateChatroomService;
+import com.oven.server.api.chat.service.EnterChatroomService;
 import com.oven.server.api.chat.service.GetChatroomService;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.common.response.Response;
@@ -23,6 +25,7 @@ public class ChatroomController {
 
     private final GetChatroomService getChatroomService;
     private final CreateChatroomService createChatroomService;
+    private final EnterChatroomService enterChatroomService;
 
     @Operation(summary = "채팅방 전체 조회 API")
     @GetMapping(value = "/chatrooms")
@@ -39,4 +42,11 @@ public class ChatroomController {
                                                            @RequestBody CreateChatroomRequest request) {
         return Response.success(ResponseCode.SUCCESS_CREATED, createChatroomService.createChatroom(user, request, providerId));
     }
+
+    @Operation(summary = "채팅방 입장 API")
+    @PostMapping(value = "/chatrooms/{chatroomId}")
+    public Response<EnterChatroomResponse> enterChatroom(@AuthenticationPrincipal User user, @PathVariable(value = "chatroomId") Long chatroomId) {
+        return Response.success(ResponseCode.SUCCESS_CREATED, enterChatroomService.enterChatroom(user, chatroomId));
+    }
+
 }
