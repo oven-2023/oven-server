@@ -35,6 +35,14 @@ public class ChatroomController {
 
     }
 
+    @Operation(summary = "내 구독방 조회 API")
+    @GetMapping(value = "/chatrooms/my")
+    public Response<List<ChatroomListDto>> getMyChatroomList(@AuthenticationPrincipal User user) {
+
+        return Response.success(ResponseCode.SUCCESS_OK, getChatroomService.getMyChatroomList(user));
+
+    }
+
     @Operation(summary = "채팅방 생성 API")
     @PostMapping(value = "/chatrooms")
     public Response<CreateChatroomResponse> createChatroom(@AuthenticationPrincipal User user,

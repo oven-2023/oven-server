@@ -3,6 +3,8 @@ package com.oven.server.api.chat.service;
 import com.oven.server.api.chat.domain.Chatroom;
 import com.oven.server.api.chat.dto.response.ChatroomListDto;
 import com.oven.server.api.chat.repository.ChatroomRepository;
+import com.oven.server.api.chat.repository.EntranceRepository;
+import com.oven.server.api.user.domain.User;
 import com.oven.server.api.work.domain.Provider;
 import com.oven.server.api.work.repository.ProviderRepository;
 import com.oven.server.common.exception.BaseException;
@@ -22,6 +24,7 @@ public class GetChatroomService {
 
     private final ChatroomRepository chatroomRepository;
     private final ProviderRepository providerRepository;
+    private final EntranceRepository entranceRepository;
 
     public List<ChatroomListDto> getChatroomList(Long providerId) {
 
@@ -45,6 +48,22 @@ public class GetChatroomService {
                                 .title(chatroom.getTitle())
                                 .count(chatroom.getCount())
                                 .wholeNum(chatroom.getWholeNum())
+                                .build()
+                ).collect(Collectors.toList());
+
+    }
+
+    public List<ChatroomListDto> getMyChatroomList(User user) {
+
+        return entranceRepository.findByUser(user)
+                .stream()
+                .map(
+                        entrance -> ChatroomListDto.builder()
+                                .chatroomId(entrance.getChatroom().getId())
+                                .providerId(entrance.getChatroom().getProvider().getId())
+                                .title(entrance.getChatroom().getTitle())
+                                .count(entrance.getChatroom().getCount())
+                                .wholeNum(entrance.getChatroom().getWholeNum())
                                 .build()
                 ).collect(Collectors.toList());
 
