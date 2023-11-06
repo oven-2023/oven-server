@@ -2,6 +2,7 @@ package com.oven.server.config.jwt;
 
 import com.oven.server.api.user.dto.response.JwtTokenResponse;
 import com.oven.server.api.user.service.RefreshTokenService;
+import com.oven.server.api.user.service.UserDetailsServiceImpl;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.common.response.ResponseCode;
 import io.jsonwebtoken.*;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -25,7 +25,7 @@ import java.util.Date;
 @Slf4j
 public class JwtTokenProvider {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final RefreshTokenService refreshTokenService;
 
     @Value("${jwt.secret}")

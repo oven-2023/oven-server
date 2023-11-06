@@ -35,7 +35,7 @@ public enum ResponseCode {
 
     // Chat
     PROVIDER_NOT_FOUND(BAD_REQUEST, "요청하신 OTT를 찾을 수 없습니다."),
-    CHATROOM_NOt_FOUND(BAD_REQUEST, "요청하신 채팅방을 찾을 수 없습니다.");
+    CHATROOM_NOT_FOUND(BAD_REQUEST, "요청하신 채팅방을 찾을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;

@@ -28,10 +28,10 @@ public class EnterChatroomResponse {
     private boolean isNewEnter;
 
     @Schema(description = "메시지")
-    private List<MessagesResponse> messages;
+    private List<MessageListResponse> messages;
 
     @Builder
-    public EnterChatroomResponse(Long providerId, String title, int count, int wholeNum, boolean isNewEnter, List<MessagesResponse> messages) {
+    public EnterChatroomResponse(Long providerId, String title, int count, int wholeNum, boolean isNewEnter, List<MessageListResponse> messages) {
         this.providerId = providerId;
         this.title = title;
         this.count = count;

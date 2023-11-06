@@ -3,6 +3,7 @@ package com.oven.server.api.chat.domain;
 import com.oven.server.api.user.domain.User;
 import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 
@@ -25,5 +26,12 @@ public class Message extends BaseEntity {
 
     @Lob
     private String content;
+
+    @Builder
+    public Message(Chatroom chatroom, User sender, String content) {
+        this.chatroom = chatroom;
+        this.sender = sender;
+        this.content = content;
+    }
 
 }
