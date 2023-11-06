@@ -3,7 +3,7 @@ package com.oven.server.api.chat.service;
 import com.oven.server.api.chat.domain.Chatroom;
 import com.oven.server.api.chat.domain.Entrance;
 import com.oven.server.api.chat.dto.response.EnterChatroomResponse;
-import com.oven.server.api.chat.dto.response.MessagesResponse;
+import com.oven.server.api.chat.dto.response.MessageListResponse;
 import com.oven.server.api.chat.repository.ChatroomRepository;
 import com.oven.server.api.chat.repository.EntranceRepository;
 import com.oven.server.api.chat.repository.MessageRepository;
@@ -28,7 +28,7 @@ public class EnterChatroomService {
     public EnterChatroomResponse enterChatroom(User user, Long chatroomId) {
 
         Chatroom chatroom = chatroomRepository.findById(chatroomId).orElseThrow(
-                () -> new BaseException(ResponseCode.CHATROOM_NOt_FOUND)
+                () -> new BaseException(ResponseCode.CHATROOM_NOT_FOUND)
         );
 
         if(entranceRepository.findByUserAndChatroom(user, chatroom).isPresent()) {
@@ -40,7 +40,7 @@ public class EnterChatroomService {
                     .isNewEnter(false)
                     .messages(messageRepository.findByChatroom(chatroom).stream()
                             .map(
-                                    message -> MessagesResponse.builder()
+                                    message -> MessageListResponse.builder()
                                             .content(message.getContent())
                                             .isSender(message.getSender() == user)
                                             .sendTime(message.getCreatedAt())

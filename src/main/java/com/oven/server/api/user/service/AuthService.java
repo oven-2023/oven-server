@@ -8,7 +8,6 @@ import com.oven.server.api.user.dto.request.LoginRequest;
 import com.oven.server.api.user.dto.request.RefreshTokenRequest;
 import com.oven.server.api.user.dto.response.AccessTokenResponse;
 import com.oven.server.api.user.dto.response.IdCheckResponse;
-import com.oven.server.api.user.dto.response.JwtTokenResponse;
 import com.oven.server.api.user.dto.response.LoginSuccessResponse;
 import com.oven.server.api.user.repository.RefreshTokenRepository;
 import com.oven.server.api.user.repository.UserRepository;

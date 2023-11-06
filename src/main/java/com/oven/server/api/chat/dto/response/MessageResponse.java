@@ -1,24 +1,22 @@
 package com.oven.server.api.chat.dto.response;
 
 import lombok.Builder;
-import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Getter
-public class MessagesResponse {
+public class MessageResponse {
 
     private String content;
 
     private LocalDateTime sendTime;
 
-    private boolean isSender;
+    private String senderNickname;
 
     @Builder
-    public MessagesResponse(String content, LocalDateTime sendTime, boolean isSender) {
+    public MessageResponse(String content, LocalDateTime sendTime, String senderNickname) {
         this.content = content;
         this.sendTime = sendTime;
-        this.isSender = isSender;
+        this.senderNickname = senderNickname;
     }
 
 }
