@@ -65,6 +65,7 @@ public class AuthService {
 
         return LoginSuccessResponse.builder()
                 .jwtTokenResponse(jwtTokenProvider.createJwtToken(user.getUsername()))
+                .username(user.getUsername())
                 .nickname(user.getNickname())
                 .build();
 

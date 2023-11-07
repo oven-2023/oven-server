@@ -5,10 +5,12 @@ import com.oven.server.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Message extends BaseEntity {
 
     @Id

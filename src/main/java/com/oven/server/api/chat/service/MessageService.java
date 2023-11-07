@@ -8,6 +8,7 @@ import com.oven.server.api.chat.dto.response.MessageResponse;
 import com.oven.server.api.chat.repository.ChatroomRepository;
 import com.oven.server.api.chat.repository.MessageRepository;
 import com.oven.server.api.user.domain.User;
+import com.oven.server.api.user.repository.UserRepository;
 import com.oven.server.common.exception.BaseException;
 import com.oven.server.common.response.ResponseCode;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +26,17 @@ public class MessageService {
     private final SimpMessagingTemplate template;
     private final MessageRepository messageRepository;
     private final ChatroomRepository chatroomRepository;
+    private final UserRepository userRepository;
 
-    public void sendMessage(Long chatroomId, User user, MessageRequest messageRequest) {
+    public void sendMessage(Long chatroomId, MessageRequest messageRequest) {
 
-        Chatroom chatroom = chatroomRepository.findById(chatroomId)
-                .orElseThrow(() -> new BaseException(ResponseCode.CHATROOM_NOT_FOUND));
+        Chatroom chatroom = chatroomRepository.findById(chatroomId).orElseThrow(
+                () -> new BaseException(ResponseCode.CHATROOM_NOT_FOUND)
+        );
+
+        User user = userRepository.findByUsername(messageRequest.getSenderId()).orElseThrow(
+                () -> new BaseException(ResponseCode.USER_NOT_FOUND)
+        );
 
         Message message = Message.builder()
                 .sender(user)
@@ -42,7 +49,7 @@ public class MessageService {
         MessageResponse messageResponse = MessageResponse.builder()
                 .content(message.getContent())
                 .sendTime(message.getCreatedAt())
-                .senderNickname(user.getNickname())
+                .senderId(user.getUsername())
                 .build();
 
         template.convertAndSend("/sub/chatrooms/" + chatroomId + "/message", messageResponse);
