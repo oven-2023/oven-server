@@ -32,7 +32,6 @@ public class MyPageService {
                                 .title(interestingWork.getWork().getTitleKr())
                                 .build()
                 )
-                .sorted()
                 .collect(Collectors.toList());
 
         return interestingWorkDtoList;
