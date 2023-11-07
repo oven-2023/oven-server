@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -115,6 +116,20 @@ public class JwtTokenProvider {
         log.info("[resolveToken] HTTP 헤더에서 Token 값 추출");
 
         String authorization = request.getHeader("Authorization");
+
+        if(authorization != null) {
+            String token = authorization.split(" ")[1].trim();
+            log.info("[resolveToken] HTTP 헤더에서 Token 값 추출 완료: {}", token);
+            return token;
+        }
+
+        return null;
+    }
+
+    public String resolveTokenInStomp(StompHeaderAccessor accessor) {
+        log.info("[resolveTokenInStomp] HTTP 헤더에서 Token 값 추출");
+
+        String authorization = accessor.getFirstNativeHeader("Authorization");
 
         if(authorization != null) {
             String token = authorization.split(" ")[1].trim();

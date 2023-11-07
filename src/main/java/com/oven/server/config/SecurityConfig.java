@@ -59,6 +59,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(swagger).permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                .requestMatchers("/stomp/chat").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
