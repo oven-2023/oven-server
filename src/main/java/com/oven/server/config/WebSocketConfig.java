@@ -27,10 +27,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws/endpoint")
-                .addInterceptors()
-                .setAllowedOriginPatterns("*")
-                .withSockJS()
-                .setHeartbeatTime(1000);
+                .setAllowedOriginPatterns("*");
         log.info("[WebSocket Endpoints]: 소켓 열림");
     }
 
