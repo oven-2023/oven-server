@@ -1,5 +1,6 @@
 package com.oven.server.api.chat.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,16 +14,17 @@ public class MessageResponse {
     private String content;
 
     @Schema(description = "메시지 전송 시간")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:MM", timezone = "Asia/Seoul")
     private LocalDateTime sendTime;
 
-    @Schema(description = "메시지 보낸 유저 닉네임", example = "오븐조아")
-    private String senderNickname;
+    @Schema(description = "메시지 발신인 ID", example = "id2023")
+    private String senderId;
 
     @Builder
-    public MessageResponse(String content, LocalDateTime sendTime, String senderNickname) {
+    public MessageResponse(String content, LocalDateTime sendTime, String senderId) {
         this.content = content;
         this.sendTime = sendTime;
-        this.senderNickname = senderNickname;
+        this.senderId = senderId;
     }
 
 }

@@ -9,4 +9,7 @@ public class MessageRequest {
     @Schema(description = "메시지 내용", example = "안녕하세요")
     private String content;
 
+    @Schema(description = "메시지 발신인 ID", example = "id2023")
+    private String senderId;
+
 }

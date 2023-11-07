@@ -23,8 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws BaseException {
         log.info("[UserDetailsServiceImpl] loadUserByUsername -> username: {}", username);
 
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new BaseException(ResponseCode.USER_NOT_FOUND));
+        return userRepository.findByUsername(username).orElseThrow(
+                () -> new BaseException(ResponseCode.USER_NOT_FOUND)
+        );
 
     }
 }
