@@ -29,6 +29,7 @@ public class MessageController {
                                       @AuthenticationPrincipal User user,
                                       @RequestBody MessageRequest messageRequest) {
 
+        log.info("[Message Controller]: {}", messageRequest.getContent());
         messageService.sendMessage(chatroomId, user, messageRequest);
         return Response.success(ResponseCode.SUCCESS_CREATED);
 

@@ -1,16 +1,12 @@
 package com.oven.server.api.chat.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class MessageRequest {
 
+    @Schema(description = "메시지 내용", example = "안녕하세요")
     private String content;
 
 }
