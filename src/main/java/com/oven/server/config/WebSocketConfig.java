@@ -29,7 +29,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws/endpoint")
                 .addInterceptors()
                 .setAllowedOriginPatterns("*")
-                .withSockJS();
+                .withSockJS()
+                .setHeartbeatTime(1000);
         log.info("[WebSocket Endpoints]: 소켓 열림");
     }
 
