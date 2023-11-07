@@ -28,11 +28,11 @@ public class MessageController {
     @MessageMapping(value = "/chatrooms/{chatroomId}/message")
     @SendTo("/sub/chatrooms/{chatroomId}")
     public Response<Void> sendMessage(@DestinationVariable(value = "chatroomId") Long chatroomId,
-                                      @AuthenticationPrincipal User user,
                                       @RequestBody MessageRequest messageRequest) {
 
         log.info("[Message Controller]: {}", messageRequest.getContent());
-        messageService.sendMessage(chatroomId, user, messageRequest);
+
+        messageService.sendMessage(chatroomId, messageRequest);
         return Response.success(ResponseCode.SUCCESS_CREATED);
 
     }
