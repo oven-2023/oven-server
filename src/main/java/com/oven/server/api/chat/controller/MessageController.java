@@ -9,9 +9,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,8 @@ public class MessageController {
 
     @Operation(tags = "Message", description = "메세지 전송")
     @MessageMapping(value = "/chatrooms/{chatroomId}/message")
-    public Response<Void> sendMessage(@PathVariable(value = "chatroomId") Long chatroomId,
+    @SendTo("/sub/chatrooms/{chatroomId}")
+    public Response<Void> sendMessage(@DestinationVariable(value = "chatroomId") Long chatroomId,
                                       @AuthenticationPrincipal User user,
                                       @RequestBody MessageRequest messageRequest) {
 
