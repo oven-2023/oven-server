@@ -12,6 +12,16 @@ services:
     environment:
       - TZ=Asia/Seoul
 
+  flask:
+    container_name: flask
+    image: see101702/flask-image
+    expose:
+      - "5000"
+    depends_on:
+      - web
+    environment:
+      - TZ=Asia/Seoul
+
   nginx:
     container_name: nginx
     image: ${DOCKER_REPO}/oven-nginx
