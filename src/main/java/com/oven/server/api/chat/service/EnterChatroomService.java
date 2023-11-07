@@ -42,7 +42,7 @@ public class EnterChatroomService {
                             .map(
                                     message -> MessageListResponse.builder()
                                             .content(message.getContent())
-                                            .isSender(message.getSender() == user)
+                                            .isSender(message.getSender().getId().equals(user.getId()))
                                             .sendTime(message.getCreatedAt())
                                             .build()
                             )
