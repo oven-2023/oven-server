@@ -3,6 +3,8 @@ package com.oven.server.api.user.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class JoinRequest {
 
@@ -14,5 +16,7 @@ public class JoinRequest {
 
     @Schema(description = "패스워드", example = "password123@")
     private String password;
+    
+    private List<Long> workIdList;
 
 }
