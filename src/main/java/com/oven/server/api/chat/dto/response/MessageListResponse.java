@@ -14,17 +14,21 @@ public class MessageListResponse {
     private String content;
 
     @Schema(description = "메시지 전송 시간", example = "19:30")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:MM", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:mm", timezone = "Asia/Seoul")
     private LocalDateTime sendTime;
 
-    @Schema(description = "지금 로그인해있는 유저가 이 메시지를 보낸 사람인지")
+    @Schema(description = "지금 로그인해있는 유저가 이 메시지를 보낸 사람인지(이거 swagger에 sender라고 뜨는데 isSender임!!")
     private boolean isSender;
 
+    @Schema(description = "메시지 발신 유저 닉네임", example = "오븐조아")
+    private String sender;
+
     @Builder
-    public MessageListResponse(String content, LocalDateTime sendTime, boolean isSender) {
+    public MessageListResponse(String content, LocalDateTime sendTime, boolean isSender, String sender) {
         this.content = content;
         this.sendTime = sendTime;
         this.isSender = isSender;
+        this.sender = sender;
     }
 
 }
