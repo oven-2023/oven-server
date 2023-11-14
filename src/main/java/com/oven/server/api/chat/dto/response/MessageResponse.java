@@ -14,17 +14,21 @@ public class MessageResponse {
     private String content;
 
     @Schema(description = "메시지 전송 시간")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:MM", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:mm", timezone = "Asia/Seoul")
     private LocalDateTime sendTime;
 
+    @Schema(description = "메시지 발신인 아이디", example = "id2023")
+    private String senderUsername;
+
     @Schema(description = "메시지 발신인 닉네임", example = "오븐조아")
-    private String sender;
+    private String senderNickname;
 
     @Builder
-    public MessageResponse(String content, LocalDateTime sendTime, String sender) {
+    public MessageResponse(String content, LocalDateTime sendTime, String senderUsername, String senderNickname) {
         this.content = content;
         this.sendTime = sendTime;
-        this.sender = sender;
+        this.senderUsername = senderUsername;
+        this.senderNickname = senderNickname;
     }
 
 }

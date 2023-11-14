@@ -34,7 +34,7 @@ public class MessageService {
                 () -> new BaseException(ResponseCode.CHATROOM_NOT_FOUND)
         );
 
-        User user = userRepository.findByUsername(messageRequest.getSenderId()).orElseThrow(
+        User user = userRepository.findByUsername(messageRequest.getSenderUsername()).orElseThrow(
                 () -> new BaseException(ResponseCode.USER_NOT_FOUND)
         );
 
@@ -49,7 +49,8 @@ public class MessageService {
         MessageResponse messageResponse = MessageResponse.builder()
                 .content(message.getContent())
                 .sendTime(message.getCreatedAt())
-                .sender(user.getNickname())
+                .senderUsername(user.getUsername())
+                .senderNickname(user.getNickname())
                 .build();
 
         template.convertAndSend("/sub/chatrooms/" + chatroomId + "/message", messageResponse);
