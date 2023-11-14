@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(swagger).permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/ws/endpoint").permitAll()
                 .anyRequest().authenticated()
 
