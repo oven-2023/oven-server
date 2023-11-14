@@ -49,7 +49,7 @@ public class MessageService {
         MessageResponse messageResponse = MessageResponse.builder()
                 .content(message.getContent())
                 .sendTime(message.getCreatedAt())
-                .senderId(user.getUsername())
+                .sender(user.getNickname())
                 .build();
 
         template.convertAndSend("/sub/chatrooms/" + chatroomId + "/message", messageResponse);
