@@ -44,7 +44,7 @@ public class EnterChatroomService {
                                             .content(message.getContent())
                                             .isSender(message.getSender().getId().equals(user.getId()))
                                             .sendTime(message.getCreatedAt())
-                                            .sender(message.getSender().getNickname())
+                                            .senderNickname(message.getSender().getNickname())
                                             .build()
                             )
                             .collect(Collectors.toList())

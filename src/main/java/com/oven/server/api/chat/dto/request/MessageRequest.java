@@ -10,6 +10,6 @@ public class MessageRequest {
     private String content;
 
     @Schema(description = "메시지 발신인 ID", example = "id2023")
-    private String senderId;
+    private String senderUsername;
 
 }

@@ -21,14 +21,14 @@ public class MessageListResponse {
     private boolean isSender;
 
     @Schema(description = "메시지 발신 유저 닉네임", example = "오븐조아")
-    private String sender;
+    private String senderNickname;
 
     @Builder
-    public MessageListResponse(String content, LocalDateTime sendTime, boolean isSender, String sender) {
+    public MessageListResponse(String content, LocalDateTime sendTime, boolean isSender, String senderNickname) {
         this.content = content;
         this.sendTime = sendTime;
         this.isSender = isSender;
-        this.sender = sender;
+        this.senderNickname = senderNickname;
     }
 
 }
