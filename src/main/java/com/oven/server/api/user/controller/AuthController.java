@@ -10,6 +10,8 @@ import com.oven.server.api.user.dto.response.IdCheckResponse;
 import com.oven.server.api.user.dto.response.JwtTokenResponse;
 import com.oven.server.api.user.dto.response.LoginSuccessResponse;
 import com.oven.server.api.user.service.AuthService;
+import com.oven.server.api.work.dto.response.SearchResultResponse;
+import com.oven.server.api.work.service.SearchWorksService;
 import com.oven.server.common.response.Response;
 import com.oven.server.common.response.ResponseCode;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,10 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final SearchWorksService searchWorksService;
 
     @Operation(summary = "아이디 중복 확인")
     @PostMapping(value = "/id/exists")
@@ -43,6 +43,14 @@ public class AuthController {
     public Response<Void> join(@RequestBody JoinRequest joinRequest) {
         authService.join(joinRequest);
         return Response.success(ResponseCode.SUCCESS_CREATED);
+    }
+
+    @Operation(summary = "회원가입시 작품 선택")
+    @GetMapping(value = "/join/works")
+    public Response<SearchResultResponse> getWorks(@RequestParam(value = "size") int size,
+                                                   @RequestParam(value = "workId", required = false) Long workId,
+                                                   @RequestParam(value = "keyword", required = false) String keyword) {
+        return Response.success(ResponseCode.SUCCESS_OK, searchWorksService.searchWork(size, workId, keyword));
     }
 
     @Operation(summary = "로그인")
