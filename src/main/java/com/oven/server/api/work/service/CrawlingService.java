@@ -39,6 +39,8 @@ public class CrawlingService {
 
     public void saveWork() {
 
+        String chromeDriverPath = "/Users/siyoung/졸업프로젝트/oven-server/chromedriver";
+
         //세션 시작
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -46,6 +48,8 @@ public class CrawlingService {
         //페이지가 로드될 때까지 대기
         //Normal: 로드 이벤트 실행이 반환 될 때 까지 기다린다.
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
+        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 
         WebDriver homeDriver = new ChromeDriver(options);
         //driver1, 상세보기 페이지 때문에 하나 더 만듦
@@ -227,18 +231,50 @@ public class CrawlingService {
 
 
                 // 감독, 배우
-                List<WebElement> people = detailDriver.findElements(By.className("person"));
+                By moreButtonLocator = By.className("action__more-button");
+
+                List<WebElement> moreButtons = detailDriver.findElements(moreButtonLocator);
+                for (WebElement button : moreButtons) {
+                    if (button.isDisplayed()) {
+                        ((JavascriptExecutor) detailDriver).executeScript("arguments[0].click();", button);
+                        log.info("--------더보기 버튼 선택--------");
+                    }
+                }
+
+//                List<WebElement> people = detailDriver.findElements(By.className("person"));
 
                 String directors = "";
                 String actors = "";
 
-                for (WebElement person : people) {
-                    if (person.findElement(By.className("character")).getText().equals("감독")) {
-                        directors = directors + person.findElement(By.className("name")).getText() + ", ";
-                    } else {
-                        actors = actors + person.findElement(By.className("name")).getText() + ", ";
+                try {
+                    List<WebElement> staffList = detailDriver.findElement(By.id("staffList")).findElements(By.className("person"));
+                    for (WebElement staff : staffList) {
+                        if (staff.findElement(By.className("character")).getText().equals("감독") || staff.findElement(By.className("character")).getText().equals("연출")) {
+                            directors = directors + staff.findElement(By.className("name")).getText() + ", ";
+                        }
                     }
+                } catch (NoSuchElementException e) {
+                    directors = "";
                 }
+                try {
+                    List<WebElement> actorList = detailDriver.findElement(By.id("actorList")).findElements(By.className("person"));
+                    int i = 0;
+                    for (WebElement actor : actorList) {
+                        i = i+1;
+                        actors = actors + actor.findElement(By.className("name")).getText() + ", ";
+                        if (i >= 10) break;
+                    }
+                } catch (NoSuchElementException e) {
+                    actors = "";
+                }
+
+//                for (WebElement person : people) {
+//                    if (person.findElement(By.xpath("//*[@id=\"staffList\"]/div[1]/div[2]")).getText().equals("감독")) {
+//                        directors = directors + person.findElement(By.className("name")).getText() + ", ";
+//                    } else {
+//                        actors = actors + person.findElement(By.className("name")).getText() + ", ";
+//                    }
+//                }
                 log.info("----directors: " + directors + "--------");
                 log.info("----actors: " + actors + "--------");
 
@@ -260,8 +296,8 @@ public class CrawlingService {
                 List<WebElement> providers = detailDriver.findElements(By.className("price-item-provider"));
 
                 for (WebElement provider : providers) {
-                    log.info("----provider: " + provider.findElement(By.tagName("p")).getText() + "--------");
-                    switch (provider.findElement(By.tagName("p")).getText()) {
+                    log.info("----provider: " + provider.findElement(By.tagName("span")).getText() + "--------");
+                    switch (provider.findElement(By.tagName("span")).getText()) {
                         case "넷플릭스":
                             saveWorkProvider("NETFLIX", savedWork);
                             break;
