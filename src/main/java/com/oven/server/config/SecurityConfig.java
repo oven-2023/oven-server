@@ -60,6 +60,8 @@ public class SecurityConfig {
                 .requestMatchers(swagger).permitAll()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/ws/endpoint").permitAll()
+                .requestMatchers("/crawling").permitAll()
+                .requestMatchers("/writing").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
