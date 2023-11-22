@@ -18,7 +18,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 @Slf4j
 public class CrawlingService {
     private final UserRepository userRepository;
@@ -222,7 +220,17 @@ public class CrawlingService {
                 log.info("--------genre: " + genre.toString() + "--------");
 
                 // 줄거리
+                WebElement moreButton = detailDriver.findElement(By.className("synopsis")).findElement(By.tagName("button"));
+                if(moreButton.isDisplayed()) {
+                    ((JavascriptExecutor) detailDriver).executeScript("arguments[0].click();", moreButton);
+                    log.info("--------더보기 버튼 선택--------");
+                }
+
                 String summary = detailDriver.findElement(By.className("synopsis")).getText();
+
+//                if(summary.contains("더보기")) {
+//                    summary = summary.substring(3);
+//                }
                 log.info("----summary: " + summary + "--------");
 
 //                String trailer = null;
@@ -238,7 +246,7 @@ public class CrawlingService {
 
                 List<WebElement> moreButtons = detailDriver.findElements(moreButtonLocator);
                 for (WebElement button : moreButtons) {
-                    if (button.isDisplayed()) {
+                    if (moreButton.isDisplayed()) {
                         ((JavascriptExecutor) detailDriver).executeScript("arguments[0].click();", button);
                         log.info("--------더보기 버튼 선택--------");
                     }
@@ -367,11 +375,7 @@ public class CrawlingService {
         log.info("--------work: " + work + "--------");
         log.info("--------findProvider: " + findProvider + "--------");
 
-        WorkProvider workProvider = WorkProvider.builder()
-                .provider(findProvider)
-                .work(work)
-                .build();
-
+        WorkProvider workProvider = new WorkProvider(work, findProvider);
         workProviderRepository.saveAndFlush(workProvider);
     }
 
