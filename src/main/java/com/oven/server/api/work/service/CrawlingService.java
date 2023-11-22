@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,10 +37,12 @@ public class CrawlingService {
     private final WorkRepository workRepository;
     private final ProviderRepository providerRepository;
     private final WorkProviderRepository workProviderRepository;
+    @Value("${chromedriver.path}")
+    private String chromeDriverPath;
 
     public void saveWork() {
 
-        String chromeDriverPath = "/Users/siyoung/졸업프로젝트/oven-server/chromedriver";
+        System.out.println(chromeDriverPath);
 
         //세션 시작
         ChromeOptions options = new ChromeOptions();
@@ -69,7 +72,7 @@ public class CrawlingService {
             WebElement item = homeDriver.findElement(By.cssSelector(".MovieItem.grid"));
 
             var stTime = new Date().getTime(); //현재시간
-            while (new Date().getTime() < stTime + 10000) { //10초 동안 무한스크롤 지속
+            while (new Date().getTime() < stTime + 40000) { //40초 동안 무한스크롤 지속
                 Thread.sleep(500); //리소스 초과 방지
                 //executeScript: 해당 페이지에 JavaScript 명령을 보내는 거
                 ((JavascriptExecutor) homeDriver).executeScript("window.scrollTo(0, document.body.scrollHeight)", item);
@@ -290,7 +293,8 @@ public class CrawlingService {
                         .genre(genre)
                         .build();
 
-                Work savedWork = workRepository.saveAndFlush(work);
+                workRepository.saveAndFlush(work);
+                log.info("-------savedWorkId: {}", work.getId());
 
                 // provider
                 List<WebElement> providers = detailDriver.findElements(By.className("price-item-provider"));
@@ -299,43 +303,43 @@ public class CrawlingService {
                     log.info("----provider: " + provider.findElement(By.tagName("span")).getText() + "--------");
                     switch (provider.findElement(By.tagName("span")).getText()) {
                         case "넷플릭스":
-                            saveWorkProvider("NETFLIX", savedWork);
+                            saveWorkProvider("NETFLIX", work);
                             break;
                         case "티빙":
-                            saveWorkProvider("TVING", savedWork);
+                            saveWorkProvider("TVING", work);
                             break;
                         case "웨이브":
-                            saveWorkProvider("WAVVE", savedWork);
+                            saveWorkProvider("WAVVE", work);
                             break;
                         case "왓챠":
-                            saveWorkProvider("WATCHA", savedWork);
+                            saveWorkProvider("WATCHA", work);
                             break;
                         case "디즈니+":
-                            saveWorkProvider("DISNEY_PLUS", savedWork);
+                            saveWorkProvider("DISNEY_PLUS", work);
                             break;
                         case "쿠팡플레이":
-                            saveWorkProvider("COUPANG_PLAY", savedWork);
+                            saveWorkProvider("COUPANG_PLAY", work);
                             break;
                         case "Apple TV":
-                            saveWorkProvider("APPLE_TV", savedWork);
+                            saveWorkProvider("APPLE_TV", work);
                             break;
                         case "네이버 시리즈온":
-                            saveWorkProvider("NAVER_SERIESON", savedWork);
+                            saveWorkProvider("NAVER_SERIESON", work);
                             break;
                         case "Google Play 무비":
-                            saveWorkProvider("GOOGLE_PLAY", savedWork);
+                            saveWorkProvider("GOOGLE_PLAY", work);
                             break;
                         case "U+모바일tv":
-                            saveWorkProvider("UPLUS_MOBILE_TV", savedWork);
+                            saveWorkProvider("UPLUS_MOBILE_TV", work);
                             break;
                         case "아마존 프라임 비디오":
-                            saveWorkProvider("AMAZON_PRIME_VIDEO", savedWork);
+                            saveWorkProvider("AMAZON_PRIME_VIDEO", work);
                             break;
                         case "라프텔":
-                            saveWorkProvider("LAFTEL", savedWork);
+                            saveWorkProvider("LAFTEL", work);
                             break;
                         case "씨네폭스":
-                            saveWorkProvider("CINEFOX", savedWork);
+                            saveWorkProvider("CINEFOX", work);
                             break;
                     }
                 }
@@ -363,10 +367,12 @@ public class CrawlingService {
         log.info("--------work: " + work + "--------");
         log.info("--------findProvider: " + findProvider + "--------");
 
-        WorkProvider workProvider = new WorkProvider();
-        workProvider.setProvider(findProvider);
-        workProvider.setWork(work);
-        workProviderRepository.save(workProvider);
+        WorkProvider workProvider = WorkProvider.builder()
+                .provider(findProvider)
+                .work(work)
+                .build();
+
+        workProviderRepository.saveAndFlush(workProvider);
     }
 
     public void saveRatingFile() {

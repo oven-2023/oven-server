@@ -11,8 +11,6 @@ import java.util.List;
 @Getter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Work extends BaseEntity {
 
     @Id
@@ -37,11 +35,24 @@ public class Work extends BaseEntity {
 
     private String poster;
 
-    @Builder.Default
     @OneToMany(mappedBy = "work")
-    private List<WorkProvider> providerList = new ArrayList<>();
+    private List<WorkProvider> providerList;
 
     @Embedded
     private Genre genre;
+
+    @Builder
+    public Work(String titleKr, String titleEng, int year, String ageRating, String director, String actor, String summary, String poster, Genre genre) {
+        this.titleKr = titleKr;
+        this.titleEng = titleEng;
+        this.year = year;
+        this.ageRating = ageRating;
+        this.director = director;
+        this.actor = actor;
+        this.summary = summary;
+        this.poster = poster;
+        this.genre = genre;
+        this.providerList = new ArrayList<>();
+    }
 
 }
