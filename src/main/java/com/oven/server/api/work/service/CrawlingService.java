@@ -220,10 +220,15 @@ public class CrawlingService {
                 log.info("--------genre: " + genre.toString() + "--------");
 
                 // 줄거리
-                WebElement moreButton = detailDriver.findElement(By.className("synopsis")).findElement(By.tagName("button"));
-                if(moreButton.isDisplayed()) {
-                    ((JavascriptExecutor) detailDriver).executeScript("arguments[0].click();", moreButton);
-                    log.info("--------더보기 버튼 선택--------");
+                try {
+                    WebElement moreButton = detailDriver.findElement(By.className("synopsis")).findElement(By.tagName("button"));
+                    if(moreButton.isDisplayed()) {
+                        ((JavascriptExecutor) detailDriver).executeScript("arguments[0].click();", moreButton);
+                        log.info("--------더보기 버튼 선택--------");
+                    }
+
+                } catch (NoSuchElementException e) {
+
                 }
 
                 String summary = detailDriver.findElement(By.className("synopsis")).getText();
@@ -246,7 +251,7 @@ public class CrawlingService {
 
                 List<WebElement> moreButtons = detailDriver.findElements(moreButtonLocator);
                 for (WebElement button : moreButtons) {
-                    if (moreButton.isDisplayed()) {
+                    if (button.isDisplayed()) {
                         ((JavascriptExecutor) detailDriver).executeScript("arguments[0].click();", button);
                         log.info("--------더보기 버튼 선택--------");
                     }
