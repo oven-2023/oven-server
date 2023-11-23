@@ -51,16 +51,22 @@ public class HomeController {
     @Operation(summary = "맞춤 작품 추천 API")
     @GetMapping("/recommendation/works")
     public Response<List<WorkListDto>> getRecommendWorkList(@AuthenticationPrincipal User user) {
-
-        String userId = String.valueOf(user.getId());
-        String response = flaskFeignClient.getDataFromFlask(userId);
-        try {
-            List<WorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(response);
-            return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return Response.success(ResponseCode.SUCCESS_OK, getRecommendWorkListService.getRecommendWorkList(user));
     }
+
+//    @Operation(summary = "맞춤 작품 추천 API")
+//    @GetMapping("/recommendation/works")
+//    public Response<List<WorkListDto>> getRecommendWorkList(@AuthenticationPrincipal User user) {
+//
+//        String userId = String.valueOf(user.getId());
+//        String response = flaskFeignClient.getDataFromFlask(userId);
+//        try {
+//            List<WorkListDto> recommendWorkDtoList = getRecommendWorkListService.getRecommendWorkList(response);
+//            return Response.success(ResponseCode.SUCCESS_OK, recommendWorkDtoList);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     @Autowired
     public HomeController(GetRecommendProviderService getRecommendProviderService, GetPopularWorkListService getPopularWorkListService, GetRecommendWorksService getRecommendWorkListService, FlaskFeignClient flaskFeignClient) {
