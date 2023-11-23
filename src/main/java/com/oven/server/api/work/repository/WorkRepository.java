@@ -16,4 +16,7 @@ public interface WorkRepository extends JpaRepository<Work, Long>, WorkRepositor
     @Query(value = "SELECT * FROM oven.work order by RAND() limit 4",nativeQuery = true)
     List<Work> findRandoms();
 
+    @Query(value = "select w from Work w where w.id in :ids")
+    List<Work> findWorksByIdIn(List<Long> ids);
+
 }

@@ -13,6 +13,8 @@ public interface RatingWorkRepository extends JpaRepository<RatingWork, Long> {
 
     List<RatingWork> findByUserOrderByCreatedAtDesc(User user);
 
+    List<RatingWork> findByUser(User user);
+
     RatingWork findByUserAndWork(User user, Work work);
 
 }
