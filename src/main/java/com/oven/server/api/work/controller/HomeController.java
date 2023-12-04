@@ -44,7 +44,7 @@ public class HomeController {
     public Response<List<WorkListDto>> getPopularWorkList() {
 
         List<WorkListDto> popularWorkDtoList = getPopularWorkListService.getPopularWorkList();
-        return Response.success(ResponseCode.SUCCESS_OK, popularWorkDtoList);
+        return Response.success(ResponseCode.SUCCESS_OK, popularWorkDtoList.subList(0, 1));
 
     }
 
