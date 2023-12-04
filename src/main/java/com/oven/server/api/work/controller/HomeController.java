@@ -51,7 +51,7 @@ public class HomeController {
     @Operation(summary = "맞춤 작품 추천 API")
     @GetMapping("/recommendation/works")
     public Response<List<WorkListDto>> getRecommendWorkList(@AuthenticationPrincipal User user) {
-        return Response.success(ResponseCode.SUCCESS_OK, getRecommendWorkListService.getRecommendWorkList(user));
+        return Response.success(ResponseCode.SUCCESS_OK, getRecommendWorkListService.getRecommendWorkList(user).subList(0, 1));
     }
 
 //    @Operation(summary = "맞춤 작품 추천 API")
